@@ -11,7 +11,7 @@ This workshop provides an introduction to the fundamental principles and practic
 - [R {packages}](/01-prerequisites/install-pkg.R)
 - [Datasets](/02-data/install-pkg.R)
 - Basic familiarity with R, consider [RStudio Primers](https://rstudio.cloud/learn/primers)
-
+- Recommended readings: [Better Data Visualizations: A Guide for Scholars, Researchers, and Wonks](https://doi.org/10.7312/schw19310), [`ggplot2`: Elegant Graphics for Data Analysis](https://link.springer.com/book/10.1007/978-3-319-24277-4), [A Layered Grammar of Graphics](http://doi.org/10.1198/jcgs.2009.07098).
 
 # Outline
 
@@ -44,15 +44,6 @@ This workshop provides an introduction to the fundamental principles and practic
 
 [slides-gg]: https://ikashnitsky.github.io/dataviz-art-skill/slides/slides-dataviz-bssd.html
 [slides-maps]: https://ikashnitsky.github.io/dataviz-art-skill/slides/slides-maps-bssd.html
-
-
-# Links to submit in-class assignments
-- Ugly `ggplot2` theme -- https://bit.ly/bssd24-ugly (day 2)
-- Any plot with own data -- https://bit.ly/bssd24-own (day 3)
-- Geocoding -- https://bit.ly/bssd24-geocoding (day 4, in class)
-- Maps -- https://bit.ly/bssd24-maps (day 4)
-- Challenge -- https://bit.ly/bssd24-challenge (day 5)
-
 
 
 # Useful links (mostly adapted from Ilya Kashnitsky and Tim Riffe's [Dataviz – the Art/Skill Cocktail](https://github.com/jschoeley/idem_viz/tree/master))
