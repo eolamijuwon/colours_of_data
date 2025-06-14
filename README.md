@@ -6,12 +6,20 @@ This workshop provides an introduction to the fundamental principles and practic
 
 
 # Prerequisites
-- [R](https://cloud.r-project.org)  
+- [<a href="https://cloud.r-project.org" target="_blank">**R**</a>]
 - [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)  
 - [R {packages}](/01-prerequisites/install-pkg.R)
 - [Datasets](/02-data/install-pkg.R)
 - Basic familiarity with R, consider [RStudio Primers](https://rstudio.cloud/learn/primers)
 - Recommended readings: [Better Data Visualizations: A Guide for Scholars, Researchers, and Wonks](https://doi.org/10.7312/schw19310), [`ggplot2`: Elegant Graphics for Data Analysis](https://link.springer.com/book/10.1007/978-3-319-24277-4), [A Layered Grammar of Graphics](http://doi.org/10.1198/jcgs.2009.07098).
+
+
+
+
+
+
+
+
 
 # Outline
 
