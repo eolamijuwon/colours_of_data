@@ -7,10 +7,6 @@ This workshop provides an introduction to the fundamental principles and practic
 
 # Prerequisites
 - [<a href="https://cloud.r-project.org" target="_blank" rel="noopener noreferrer">R</a>]
-
-
-
-- <a href="https://cloud.r-project.org" target="_blank">R</a>]
 - [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)  
 - [R {packages}](/01-prerequisites/install-pkg.R)
 - [Datasets](/02-data/install-pkg.R)
@@ -36,18 +32,17 @@ This workshop provides an introduction to the fundamental principles and practic
 - Basic types of plots [[slides](/03-lectures/ggplot-basics.Rmd)]
 - `ggplot2` basics
 - Arranging and exporting plots
-- Practical [exercises](/04-practicals/ggplot-basics.Rmd)
+- Practical [exercises](http://iteachr.shinyapps.io/ggplot_basics/)
 
 ### Topic 4: TUNE-UP [11:45-13:00]
-- Themes in dataviz [[slides](/03-lectures/ggplot-basics.Rmd)]
+- Themes in dataviz [[slides](/03-lectures/ggplot-tuneup.Rmd)]
 - Colors and fonts
 - Annotating
-- Practical [exercises](/04-practicals/ggplot-tuneup.Rmd)
+- Practical [exercises](https://iteachr.shinyapps.io/ggplot_tuneup/)
 
 ### Topic 3: TOOLBOX [14:00-15:30]
 - Heatmap, dotplot, ggridges, treemap, geofacet [[slides](/03-lectures/ggplot-basics.Rmd)]
 - Interactivity: `plotly`, `gganimate`
-- Practical [exercises](/04-practicals/ggplot-toolbox.Rmd)
 
 ### Topic 5: SHINE [15:00-16:30]
 - Dataviz challenge in teams
