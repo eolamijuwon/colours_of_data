@@ -6,7 +6,11 @@ This workshop provides an introduction to the fundamental principles and practic
 
 
 # Prerequisites
-- [<a href="https://cloud.r-project.org" target="_blank">**R**</a>]
+- [<a href="https://cloud.r-project.org" target="_blank" rel="noopener noreferrer">R</a>]
+
+
+
+- <a href="https://cloud.r-project.org" target="_blank">R</a>]
 - [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)  
 - [R {packages}](/01-prerequisites/install-pkg.R)
 - [Datasets](/02-data/install-pkg.R)
