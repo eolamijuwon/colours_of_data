@@ -1,0 +1,1278 @@
+---
+title: "Statistical Foundations"
+tutorial:
+  id: "exercise-statistical-foundations"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+    css: www/columns.css
+    tutorial.data_dir: data/
+runtime: shiny_prerendered
+description: >
+
+  Learn how to clean/wrangle large quantitative datasets 
+  as well as apply statistical techniques to assess 
+  relationships between/among study variables.
+
+---
+
+```{r setup, include=FALSE}
+# install.packages("readstata13", repos='http://cran.us.r-project.org')
+# remotes::install_github("rstudio/gradethis")
+
+library (learnr)
+library (dplyr)
+library (readstata13)
+library (readr)
+library (gradethis)
+library (visdat)
+library (sortable)
+# library (car)
+library (stats)
+
+men_data <- read.dta13("data/men_ind.dta")
+women_data <- read.dta13("data/women_ind.dta")
+environment_data <- read_csv("data/environment.csv")
+
+
+
+tutorial_options(
+  exercise.cap = "Console",
+  exercise.checker = gradethis::grade_learnr
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+
+
+
+## Welcome
+
+### 
+
+This practical exercise is designed to help you develop tidy data analysis skills with free, open-source statistical analysis software like R/RStudio. 
+
+:::::: {.cols data-latex=""}
+
+::: {.col data-latex="{0.5\textwidth}"}
+
+In this practical exercise, you will to :
+
+* **organize, clean/wrangle or prepare large quantitative datasets for further data analysis.**
+* describe patterns in a dataset using descriptive statistics.
+* differentiate between the various multiple-multiples of hypothesis.
+* assess associations between variables.
+* assess univariable and multivariable relationships between variables using logistic and linear regression models.
+
+The required and essential readings for this module are available on [_R for Data Science_](https://r4ds.had.co.nz/index.html).
+ 
+:::
+
+::: {.col data-latex="{0.15\textwidth}"}
+\ 
+\ 
+<!-- an empty Div (with a white space), serving as
+a column separator -->
+:::
+
+::: {.col data-latex="{0.35\textwidth}"}
+
+<br>
+<br>
+<!-- ![](www/eolamijuwon.jpeg){width=55%} -->
+:::
+
+::::::
+
+
+<br>
+The exercises have been developed by:
+
+* **Dr. Emmanuel Olamijuwon** [[email](mailto:emmanuel@olamijuwon.com)], [[website](https://www.st-andrews.ac.uk/geography-sustainable-development/people/eoo1/)] [[personal website](https://e.olamijuwon.com/)]
++ Lecturer (Assistant Professor) in Social and Health Data Science/Literacy
+| ![](www/geo_logo.png){width=35%}
+
+
+### Prerequisites
+
+I've installed and pre-loaded the following r-packages📦 for this tutorial:
+
+```{r eval = FALSE}
+library (readstata13)
+library (readr)
+library (dplyr)
+library (stats)
+library (visdat)
+library (car)
+```
+
+
+To practice these skills, we will use the women and men's [`recode model dataset`](https://dhsprogram.com/data/model-datasets.cfm) derived from the [demographic and health survey](https://dhsprogram.com/). The demographic and health survey (DHS) is a nationally representative survey designed to collect data on monitoring and impact evaluation indicators important for individual countries and cross-country comparisons. 
+
+We will also utilize the geographic dataset associated with the geo-location of each household sampled in the DHS, which is available on the DHS website. For this exercise, I have removed several variables that are not relevant for this practical. For more information about the full range of variables/information collected by the DHS, please check the DHS survey [questionnaire or manual](https://dhsprogram.com/methodology/Survey-Types/DHS-Questionnaires.cfm).
+
+If you are ready to begin, click on!
+
+## Tidy data management
+
+### A quick recap of tidy functions
+
+As part of this week's practical, our goal is to apply all the data management steps to a real world data. Specifically, you will use tidy r-functions to:
+
+- Fix structural errors
+
+- Remove duplicate or irrelevant observations
+
+- Handle (remove) unwanted outliers
+
+- Handle (remove) missing data
+
+- Validate
+
+
+Before you begin, why don't you try to answer the questions below and see if you understand what r-function to use in each of the following scenarios.
+
+```{r recap-quiz1, echo=FALSE}
+question("Which tidy function would you use to keep only relevant columns in a dataset?",
+  answer("`select()`", correct = TRUE),
+  answer("`filter()`"),
+  answer("`mutate()`"),
+  answer("`rename()`"),
+  answer("`case_when()`"),
+  allow_retry = TRUE
+)
+```
+
+
+```{r recap-quiz2, echo=FALSE}
+question("Which tidy function would you use to change columns names in a dataframe?",
+  answer("`select()`"),
+  answer("`filter()`"),
+  answer("`mutate()`"),
+  answer("`rename()`", correct = TRUE),
+  answer("`case_when()`"),
+  allow_retry = TRUE
+)
+```
+
+
+```{r recap-quiz3, echo=FALSE}
+question("Which tidy function would you use to replace values in a dataframe based on a set of conditions?",
+  answer("`select()`"),
+  answer("`filter()`"),
+  answer("`mutate()`"),
+  answer("`rename()`"),
+  answer("`case_when()`", correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+```{r recap-quiz4, echo=FALSE}
+question("Which tidy function would you use to keep only relevant observations in a dataset?",
+  answer("`select()`"),
+  answer("`filter()`", correct = TRUE),
+  answer("`mutate()`"),
+  answer("`rename()`"),
+  answer("`case_when()`"),
+  allow_retry = TRUE
+)
+```
+
+
+```{r recap-quiz5, echo=FALSE}
+question("Which tidy function would you to create a new column in a dataframe?",
+  answer("`select()`"),
+  answer("`filter()`"),
+  answer("`mutate()`", correct = TRUE),
+  answer("`rename()`"),
+  answer("`case_when()`"),
+  allow_retry = TRUE
+)
+```
+
+```{r recap-quiz6, echo=FALSE}
+question("Which tidy function would you to assess the structure of a dataframe?",
+  answer("`select()`"),
+  answer("`filter()`"),
+  answer("`mutate()`"),
+  answer("`glimpse()`", correct = TRUE),
+  answer("`case_when()`"),
+  allow_retry = TRUE
+)
+```
+
+
+### Reading data into R
+
+Now that you have familiarized with the tidy functions, let's load all the relevant datasets for this practical into R. 
+
+- `men_ind.dta` is the men's recode dataset and includes responses from men aged 15-59 years.
+
+- `women_ind.dta` is the women's recode dataset and includes responses from men aged 15-49 years.
+
+- `environment.csv` is the geospatial covariates dataset which links survey cluster locations to ancillary data on population composition, climate, and environmental factors. 
+
+I have already downloaded these datasets for you and saved them in a folder called *data* on the University's cloud computing server. You do not need to worry about navigating to this folder. Remember that whenever you need to load any of these datasets, you need to call the folder first, for example, `read.dta13("data/men_ind.dta")` to read the `men_ind.dta` data file. I have already read the men's and women's datasets in the code chunk below into our R-working environment. Since both datasets are in STATA format (.dta), I have used the `read.dta13()` function from the `readstata13` package.
+
+
+```{r, eval = FALSE}
+
+men_data <- read.dta13("data/men_ind.dta")
+women_data <- read.dta13("data/women_ind.dta")
+
+```
+
+Your first exercise is to read the geospatial covariates dataset into our R-working environment. You should assign the data to the `environment_data`. To solve this challenge, you need to determine the r-function necessary to read CSV files in R. Although there are several alternatives, I prefer that you use the r-function from the `readr` package.
+
+
+```{r read_dtaex1, exercise = TRUE, exercise.completion = TRUE}
+
+environment_data <- read____(____)
+
+```
+
+```{r read_dtaex1-solution}
+environment_data <- read_csv("data/environment.csv")
+```
+
+```{r read_dtaex1-check}
+grade_code(correct = "The read_csv() function allows you to imports data into R as a tibble. Tibbles are better than regular data frames because they load faster.")
+```
+
+  <div id="read_dtaex1-hint">
+  **Hint:** Check that you are using the right function for reading CSV files. <br> * Have you correctly specified the file path? Remember that the dataset is in the data/ folder  <br> * Ensure that your file paths are in quotes “ ”. <br>  * Have you spelt the file and folder names correctly?
+  </div>
+
+
+### Inspect the data
+
+There are many ways to inspect the structure and dimensions of our data sets. 
+
+1. You can use the `glimpse` function from `dplyr` to asses the columns of the dataset.
+
+2. You can use the `dim` function from base-r to assess the dimension (number of rows and columns) of the dataset.
+
+In the exercise below, use `dim()` to get the number of rows and columns in each dataset. I have pre-filled the code to get the dimensions of the environmental dataset below. You can adapt the code to obtain dimensions for the other datasets.
+
+
+```{r dimex1, exercise = TRUE, exercise.completion = TRUE}
+dim(environment_data)
+
+```
+
+```{r dimex1-solution}
+dim(environment_data)
+dim(men_data)
+dim(women_data)
+```
+
+```{r dimex1-check}
+grade_code()
+```
+
+
+Based on the output from the previous code chunk, now try to answer the following questions to gauge your understanding of columns, sample size, number of observations, and variables. To answer the questions correctly, you need to understand the unit of analysis for each dataset. 
+
+```{r dim-quiz1, echo=FALSE}
+question("How many variables are there in the men's dataset?",
+  answer("13,311"),
+  answer("39", correct = TRUE),
+  answer("132", message = "132 is the column size for the geographic covariate dataset."),
+  answer("41,821"),
+  answer("1,691", message = "1,691 is the number of sampling clusters from which households were recruited."),
+  allow_retry = TRUE
+)
+```
+
+
+```{r dim-quiz2, echo=FALSE}
+question("How many variables are there in the geographic dataset?",
+  answer("13,311"),
+  answer("39"),
+  answer("132", correct = TRUE),
+  answer("41,821"),
+  answer("1,691", message = "1,691 is the number of sampling clusters from which households were recruited."),
+  allow_retry = TRUE
+)
+```
+
+
+```{r dim-quiz3, echo=FALSE}
+question("How many women were interviewed and included in the women's dataset?",
+  answer("13,311"),
+  answer("39"),
+  answer("132"),
+  answer("41,821", correct = TRUE),
+  answer("1,691", message = "1,691 is the number of sampling clusters from which households were recruited."),
+  allow_retry = TRUE
+)
+```
+
+```{r dim-quiz4, echo=FALSE}
+question("How many men were interviewed and included in the men's dataset?",
+  answer("13,311", correct = TRUE),
+  answer("39"),
+  answer("132"),
+  answer("41,821", message = "41,821 is the row size for one of the datasets but not the women's."),
+  answer("1,691", message = "1,691 is the number of sampling clusters from which households were recruited."),
+  allow_retry = TRUE
+)
+```
+
+
+
+### Keep relevant columns
+
+In Lecture 2, we introduced you to the `select()` function for keeping or dropping columns from a large dataset using their names and types. You can find additional information about **`selection helpers`** to select specific columns on this website.
+
+In the exercise below, you will select the following variables: *cluster identifier*, *place of residence*, and *individual's age*. In addition, our practice dataset includes a derived measure of household wealth (`mv191_der`) that I have already normalised for you. The values for this variable range from 0 (poorest household) to 1 (richest household). 
+
+Our dataset also includes individual's responses to different scenarios in which they would support wife beating. In the men's dataset, these responses are labelled mv744a, mv744b, ... mv744e.
+
+I have pre-selected these variables for you in the men's dataset. Now, adapt this code to select the same variables in the women's dataset.
+
+
+
+```{r select_ex1, exercise = TRUE, exercise.completion = TRUE}
+
+clean_men <- men_data %>% 
+             select (mv001, mv024, mv025, 
+                     mv012, mv191_der,
+                     contains("mv744"))
+
+clean_women <- women_data %>% 
+               select (____, ____, ____,
+                       ____, ____, ____)
+
+```
+
+
+```{r select_ex1-solution}
+clean_men <- men_data %>% 
+             select (mv001, mv024, mv025, 
+                     mv012, mv191_der,
+                     contains("mv744"))
+
+clean_women <- women_data %>% 
+             select (v001, v024, v025, 
+                     v012, v191_der,
+                     contains("v744"))
+```
+
+```{r select_ex1-check}
+grade_code()
+```
+
+
+  <div id="select_ex1-hint">
+  **Hint:** Have you familiarised yourself with how variables are labelled in the women's dataset? You can check the data manual or the DHS website for additional information about this.<br><br> Have you also adapted the code (same selection order) for selecting variables in the men's dataset?
+  </div>
+  
+  
+If you have done that correctly, apply the same logic to select the following variables in the environmental dataset. For this, we are only interested in the cluster identifier, aridity (2020), mean temperature (2020) and enhanced vegetation index (2020).
+
+```{r select_ex2, exercise = TRUE, exercise.completion = TRUE}
+
+clean_env <- environment_data %>% 
+             select (DHSCLUST, Aridity_2020, 
+                     ____, ____)
+
+```
+
+```{r select_ex2-solution}
+clean_env <- environment_data %>% 
+             select (DHSCLUST, Aridity_2020, 
+                     Mean_Temperature_2020,
+                     Enhanced_Vegetation_Index_2020)
+```
+
+```{r select_ex2-check}
+grade_code()
+```
+
+
+  <div id="select_ex2-hint">
+  **Hint:** Check that you have selected all the variable required and in the order advised.
+  </div>
+  
+  
+### Rename Columns
+
+In this activity, you will use `rename()` to rename variables to valid and consistent names across both men's and women's data sets. I have provided additional descriptions for each variable below to help you match the new labels to valid column names in each dataset. You may also check the data documentation for additional help with this.
+
+- Cluster identifier *(I have pre-filled this for you)* = `DHSCLUST`
+
+- Region of residence *(I have also pre-filled this for you)* = `region`
+
+- Normalised household wealth index = `wealth_index`
+
+- Place of residence = `residence`
+
+- Age (in single years) = `age`
+
+- Wife beating justified if she goes out without his permission = `beat_go_out`
+
+- Wife beating justified if she burns food = `beat_foodburn`
+
+- Wife beating justified if she neglects the children = `beat_neglect`
+
+- Wife beating justified if she refuses sex with him = `beat_sex`
+
+- Wife beating justified if she argues with him = `beat_argues`
+
+```{r rename_ex1-setup}
+clean_men <- men_data %>% 
+             select (mv001, mv024, mv025,
+                     mv012, mv191_der,
+                     contains("mv744"))
+
+clean_women <- women_data %>% 
+             select (v001, v024, v025, 
+                     v012, v191_der,
+                     contains("v744"))
+```
+
+
+```{r rename_ex1, exercise = TRUE, exercise.eval = FALSE}
+
+clean_men <- clean_men %>% 
+             rename (DHSCLUST = mv001,
+                     region = mv024,
+                     residence = ____,
+                     age = ____,
+                     wealth_index = ____,
+                     beat_go_out = ____,
+                     beat_foodburn = ____,
+                     beat_neglect = ____,
+                     beat_sex = ____
+                     beat_argues = ____)
+
+
+clean_women <- clean_women %>% 
+             rename (DHSCLUST = v001,
+                     region = v024,
+                     wealth_index = ____,
+                     age = ____,
+                     residence = ____,
+                     beat_go_out = ____,
+                     beat_foodburn = ____,
+                     beat_neglect = ____,
+                     beat_sex = ____
+                     beat_argues = ____)
+
+```
+
+```{r rename_ex1-solution}
+clean_men <- clean_men %>% 
+             rename (DHSCLUST = mv001,
+                     region = mv024,
+                     residence = mv025,
+                     age = mv012,
+                     wealth_index = mv191_der,
+                     beat_go_out = mv744a,
+                     beat_foodburn = mv744b,
+                     beat_neglect = mv744c,
+                     beat_sex = mv744d,
+                     beat_argues = mv744e)
+
+
+clean_women <- clean_women %>% 
+             rename (DHSCLUST = v001,
+                     region = v024,
+                     wealth_index = v191_der,
+                     age = v012,
+                     residence = v025,
+                     beat_go_out = v744a,
+                     beat_foodburn = v744b,
+                     beat_neglect = v744c,
+                     beat_sex = v744d,
+                     beat_argues = v744e)
+```
+
+```{r rename_ex1-check}
+grade_code()
+```
+
+
+  <div id="rename_ex1-hint">
+  **Hint:** Have you correctly matched the new column names to the valid variable names in the dataset? Here is a full list of all the relevant variables in the men's dataset, for example, mv001, mv025, mv012, mv191_der, mv744a, mv744b, mv744c, mv744d, mv744e.
+  </div>
+
+
+### Create (or recode) variables
+
+Remember that we have two separate data sets for men (`clean_men`) and women (`clean_women`). Our ultimate goal is to merge these datasets to create a single database of men and women interviewed in the survey. Still, we need to create an identifier within each piece of data. We can do this by creating a new variable called `sex`. For men in the `clean_men` dataset, we will make *sex =  "Male"* and for women in `clean_women`, we will make *sex =  "Female"*.
+
+```{r create_ex1-setup, exercise.setup = "rename_ex1-setup"}
+clean_men <- clean_men %>% 
+             rename (DHSCLUST = mv001,
+                     region = mv024,
+                     residence = mv025,
+                     age = mv012,
+                     wealth_index = mv191_der,
+                     beat_go_out = mv744a,
+                     beat_foodburn = mv744b,
+                     beat_neglect = mv744c,
+                     beat_sex = mv744d,
+                     beat_argues = mv744e)
+
+
+clean_women <- clean_women %>% 
+               rename (DHSCLUST = v001,
+                       region = v024,
+                       wealth_index = v191_der,
+                       age = v012,
+                       residence = v025,
+                       beat_go_out = v744a,
+                       beat_foodburn = v744b,
+                       beat_neglect = v744c,
+                       beat_sex = v744d,
+                       beat_argues = v744e)
+```
+
+```{r create_ex1, exercise = TRUE, exercise.eval = FALSE}
+clean_men <- clean_men %>% 
+             ___ (___)
+
+clean_women <- clean_women %>% 
+                ___ (___)
+```
+
+```{r create_ex1-solution}
+clean_men <- clean_men %>% 
+             mutate (sex = "Male")
+
+clean_women <- clean_women %>% 
+               mutate (sex = "Female")
+```
+
+```{r create_ex1-check}
+grade_code()
+```
+
+  <div id="create_ex1-hint">
+  **Hint:** Have you used the correct tidy function for creating new columns in R? <br><br> Do you still remember when to use **=** vs **==**?
+  </div>
+  
+### 
+
+You have successfully created an identifier for the sex of the study participant in both datasets. Now, let us clean each of the measures of support for wife beating. Our ultimate goal here is to have a single variable that scores individuals based on the number of scenarios in which they endorse wife beating. The score can range from 0 (they do not support wife beating at all) to 5 (they support wife beating in all five scenarios).
+
+Each one of the measures of justification for IPV is measured as a nominal variable with three categories *("no", "yes", "don't know")*. For each measure, we are going to recode the variables such that individuals will be assigned:
+
+* a value of 1 if they answer yes to the specific question/scenario (e.g. `beat_go_out == "no"`)
+
+* a value of 0 if they answer no to the specific question/scenario (e.g. `beat_go_out == "yes"`)
+
+* a value of NA (replace to missing) if they answer don't know to the specific question/scenario (e.g. `beat_go_out == "don't know"`)
+
+I have already pre-filled the first one (`beat_go_out`) for you. It would help if you did the same for the other scenarios in both datasets by replacing the blanks.
+
+
+
+```{r create_ex2, exercise = TRUE, exercise.eval = FALSE, exercise.setup="create_ex1-setup"}
+
+clean_men  <-  clean_men %>% 
+               mutate (sex = "Male") %>% 
+               mutate (beat_go_out = case_when(beat_go_out == "yes" ~ 1,
+                                               beat_go_out == "no" ~ 0,
+                                               beat_go_out == "don't know" ~ NA,
+                                               .default = NA),
+                       beat_foodburn = case_when(___),
+                       beat_neglect = case_when(___),
+                       beat_sex = case_when(___),
+                       beat_argues = case_when(___))
+
+
+clean_women <- clean_women %>% 
+               mutate (sex = "Female") %>% 
+               mutate (beat_go_out = case_when(beat_go_out == "yes" ~ 1,
+                                               beat_go_out == "no" ~ 0,
+                                               beat_go_out == "don't know" ~ NA,
+                                               .default = NA),
+                       beat_foodburn = case_when(___),
+                       beat_neglect = case_when(___),
+                       beat_sex = case_when(___),
+                       beat_argues = case_when(___))
+```
+
+```{r create_ex2-solution}
+clean_men  <-  clean_men %>% 
+                 mutate (sex = "Male") %>% 
+
+               mutate (beat_go_out = case_when(beat_go_out == "yes" ~ 1,
+                                               beat_go_out == "no" ~ 0,
+                                               beat_go_out == "don't know" ~ NA,
+                                               .default = NA),
+                       beat_foodburn = case_when(beat_foodburn == "yes" ~ 1,
+                                                 beat_foodburn == "no" ~ 0,
+                                                 beat_foodburn == "don't know" ~ NA,
+                                                 .default = NA),
+                       beat_neglect = case_when(beat_neglect == "yes" ~ 1,
+                                                beat_neglect == "no" ~ 0,
+                                                beat_neglect == "don't know" ~ NA,
+                                                .default = NA),
+                       beat_sex = case_when(beat_sex == "yes" ~ 1,
+                                            beat_sex == "no" ~ 0,
+                                            beat_sex == "don't know" ~ NA,
+                                            .default = NA),
+                       beat_argues = case_when(beat_argues == "yes" ~ 1,
+                                               beat_argues == "no" ~ 0,
+                                               beat_argues == "don't know" ~ NA,
+                                               .default = NA))
+
+clean_women <- clean_women %>% 
+  
+                 mutate (sex = "Female") %>% 
+
+               mutate (beat_go_out = case_when(beat_go_out == "yes" ~ 1,
+                                               beat_go_out == "no" ~ 0,
+                                               beat_go_out == "don't know" ~ NA,
+                                               .default = NA),
+                       beat_foodburn = case_when(beat_foodburn == "yes" ~ 1,
+                                                 beat_foodburn == "no" ~ 0,
+                                                 beat_foodburn == "don't know" ~ NA,
+                                                 .default = NA),
+                       beat_neglect = case_when(beat_neglect == "yes" ~ 1,
+                                                beat_neglect == "no" ~ 0,
+                                                beat_neglect == "don't know" ~ NA,
+                                                .default = NA),
+                       beat_sex = case_when(beat_sex == "yes" ~ 1,
+                                            beat_sex == "no" ~ 0,
+                                            beat_sex == "don't know" ~ NA,
+                                            .default = NA),
+                       beat_argues = case_when(beat_argues == "yes" ~ 1,
+                                               beat_argues == "no" ~ 0,
+                                               beat_argues == "don't know" ~ NA,
+                                               .default = NA))
+
+```
+
+```{r create_ex2-check}
+grade_code()
+```
+
+  <div id="create_ex2-hint">
+  **Hint:** Do you still remember when to use **=** vs **==**? <br><br> Have you correctly spelt the variables names and their corresponding values? For example, "yes" instead of "Yes"?
+  </div>
+
+### 
+
+You have now successfully dummy-coded (you have coded them as 0 or 1) all measures of wife beating in both datasets such that each individual either has a value of 0 (they do not support wife beating) or 1 (they support wife beating) for the specific scenario.
+
+Let's also create a new variable, `att_ipv`, which will be the sum of all the measures of justification for wife beating. There are many ways to do this in R, but I would prefer you use the simplified method using `+`. I have already pre-filled the men's dataset for you. Now, try to do the same with the women's dataset.
+
+```{r create_ex3-setup, exercise.setup="create_ex1-setup"}
+
+clean_men  <-  clean_men %>% 
+               mutate (sex = "Male") %>% 
+               mutate (beat_go_out = case_when(beat_go_out == "yes" ~ 1,
+                                               beat_go_out == "no" ~ 0,
+                                               beat_go_out == "don't know" ~ NA,
+                                               .default = NA),
+                       beat_foodburn = case_when(beat_foodburn == "yes" ~ 1,
+                                                 beat_foodburn == "no" ~ 0,
+                                                 beat_foodburn == "don't know" ~ NA,
+                                                 .default = NA),
+                       beat_neglect = case_when(beat_neglect == "yes" ~ 1,
+                                                beat_neglect == "no" ~ 0,
+                                                beat_neglect == "don't know" ~ NA,
+                                                .default = NA),
+                       beat_sex = case_when(beat_sex == "yes" ~ 1,
+                                            beat_sex == "no" ~ 0,
+                                            beat_sex == "don't know" ~ NA,
+                                            .default = NA),
+                       beat_argues = case_when(beat_argues == "yes" ~ 1,
+                                               beat_argues == "no" ~ 0,
+                                               beat_argues == "don't know" ~ NA,
+                                               .default = NA))
+
+clean_women <- clean_women %>% 
+               mutate (sex = "Female") %>% 
+               mutate (beat_go_out = case_when(beat_go_out == "yes" ~ 1,
+                                               beat_go_out == "no" ~ 0,
+                                               beat_go_out == "don't know" ~ NA,
+                                               .default = NA),
+                       beat_foodburn = case_when(beat_foodburn == "yes" ~ 1,
+                                                 beat_foodburn == "no" ~ 0,
+                                                 beat_foodburn == "don't know" ~ NA,
+                                                 .default = NA),
+                       beat_neglect = case_when(beat_neglect == "yes" ~ 1,
+                                                beat_neglect == "no" ~ 0,
+                                                beat_neglect == "don't know" ~ NA,
+                                                .default = NA),
+                       beat_sex = case_when(beat_sex == "yes" ~ 1,
+                                            beat_sex == "no" ~ 0,
+                                            beat_sex == "don't know" ~ NA,
+                                            .default = NA),
+                       beat_argues = case_when(beat_argues == "yes" ~ 1,
+                                               beat_argues == "no" ~ 0,
+                                               beat_argues == "don't know" ~ NA,
+                                               .default = NA))
+```
+
+```{r create_ex3, exercise = TRUE, exercise.eval = FALSE}
+
+clean_men  <-  clean_men %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues)
+
+
+clean_women <- clean_women %>% 
+               mutate (att_ipv = ___)
+
+```
+
+```{r create_ex3-solution}
+clean_men  <-  clean_men %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues)
+
+
+clean_women <- clean_women %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues)
+
+```
+
+```{r create_ex3-check}
+grade_code()
+```
+
+  <div id="create_ex2-hint">
+  **Hint:** Make sure that you have listed the variables in the same order as was pre-filled in the men's dataset.
+  </div>
+
+
+### 
+
+Good job! Thanks to you, we now have a composite (aggregate) measure of support for wife beating that ranges from 0-5. Let's dummy code this aggregate measure so that we have a new binary variable `att_ipv_bin` in each dataset which captures whether individuals individuals support any form of violence (att_ipv > 0) or not (att_ipv == 0). 
+
+Take note, that there are many ways to dummy code this variable. For example, we could define a threshold based on the severity of support. However, according to the SDG, any form of support for wife beating is just as bad as all.
+
+
+```{r create_ex4, exercise = TRUE, exercise.eval = FALSE, exercise.setup="create_ex3-setup"}
+
+clean_men  <-  clean_men %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues)
+               mutate (att_ipv_bin = case_when(att_ipv ___ 0 ~ "No support for wife beating",
+                                               att_ipv ___ 0 ~ "Support wife beating",
+                                               .default = ___)) 
+
+
+clean_women <- clean_women %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues) %>% 
+               mutate (att_ipv_bin = case_when(att_ipv ___ 0 ~ "No support for wife beating",
+                                               att_ipv ___ 0 ~ "Support wife beating",
+                                               .default = ___)) 
+
+```
+
+```{r create_ex4-solution}
+clean_men  <-  clean_men %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues) %>% 
+               mutate (att_ipv_bin = case_when(att_ipv == 0 ~ "No support for wife beating",
+                                               att_ipv > 0 ~ "Support wife beating",
+                                               .default = NA)) 
+
+clean_women <- clean_women %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues) %>% 
+               mutate (att_ipv_bin = case_when(att_ipv == 0 ~ "No support for wife beating",
+                                               att_ipv > 0 ~ "Support wife beating",
+                                               .default = NA)) 
+```
+
+```{r create_ex4-check}
+grade_code(correct = "As you might have noticed, we have used the case_when() function in R. This function checks whether the condition(s) that we have set is/are true. It then assign values to the new variable based on the result of this check.")
+```
+
+### Append all datasets
+
+Next, we will combine the two men and women dataset into a single dataset. We will call this new dataset `merged_dta`. However, we need to check that these two datasets have the same columns and column names. You can check this using the `glimpse()` function.
+
+```{r merge_check, exercise = T, exercise.eval = TRUE, exercise.setup="create_ex3-setup"}
+
+glimpse (clean_men)
+
+glimpse (clean_women)
+
+```
+
+
+```{r merge-quiz1, echo=FALSE}
+question("Based on the output from the code chunk above, would you say that the two datasets have the same columns and column names?",
+  answer("Yes", correct = TRUE, message = "Both the `clean_men` and the `clean_women` have exactly the same number of columns (13) <br> They both also have the same column names such as `DHSCLUST`, `residence`, `age`, `wealth_index` and others"),
+  answer("No", message = "Both the `clean_men` and the `clean_women` have exactly the same number of columns (13) <br> They both also have the same column names such as `DHSCLUST`, `residence`, `age`, `wealth_index` and others"),
+  allow_retry = FALSE
+)
+```
+
+###
+
+So far, we have confirmed that both the `clean_men` and the `clean_women` have exactly the same number of columns (13) <br> They both also have the same column names. Now, let's merge both datasets. We will do that using the `rbind()` function which simply means row(r)_bind--to combine rows of datasets with the same column names into one.
+
+Since, we have now created several additional variables, let's also now keep only our variables of interest after merging both datasets. You should fill in the blanks and make sure you list the variables to keep in the following order:
+
+- Household cluster identifier
+- Region of residence
+- The individual's age
+- The individual's sex
+- Place of residence
+- The composite score of support for wife beating
+- Binary indicator of support for wife beating
+- Wealth index.
+
+```{r merge_ex1-setup, exercise.setup="create_ex3-setup"}
+clean_men  <-  clean_men %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues) %>% 
+               mutate (att_ipv_bin = case_when(att_ipv == 0 ~ "No support for wife beating",
+                                               att_ipv > 0 ~ "Support wife beating",
+                                               .default = NA)) 
+
+clean_women <- clean_women %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues) %>% 
+               mutate (att_ipv_bin = case_when(att_ipv == 0 ~ "No support for wife beating",
+                                               att_ipv > 0 ~ "Support wife beating",
+                                               .default = NA))
+```
+
+```{r merge_ex1, exercise = TRUE, exercise.eval = FALSE}
+
+merged_dta <-  rbind(clean_men,
+                     clean_women) %>% 
+               select (DHSCLUST, ___, 
+                       ___, ___, ___,
+                       ___, ___, ___)
+
+```
+
+```{r merge_ex1-solution}
+merged_dta <-  rbind (clean_men,
+                      clean_women) %>% 
+               select (DHSCLUST, region,
+                       age, sex, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+```
+
+```{r merge_ex1-check}
+grade_code()
+```
+
+  <div id="merge_ex1-hint">
+  **Hint:** Check that the variable names have been entered correctly. <br>Also, ensure that the variables have been entered in the order advised.
+  </div>
+
+###
+
+Next, use the appropriate tidy function to check the dimension and structure of the merged data.
+
+```{r merge_ex2-setup, exercise.setup="create_ex3-setup"}
+clean_men  <-  clean_men %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues) %>% 
+               mutate (att_ipv_bin = case_when(att_ipv == 0 ~ "No support for wife beating",
+                                               att_ipv > 0 ~ "Support wife beating",
+                                               .default = NA)) 
+
+clean_women <- clean_women %>% 
+               mutate (att_ipv = beat_go_out + beat_foodburn +
+                                 beat_neglect + beat_sex +
+                                 beat_argues) %>% 
+               mutate (att_ipv_bin = case_when(att_ipv == 0 ~ "No support for wife beating",
+                                               att_ipv > 0 ~ "Support wife beating",
+                                               .default = NA))
+```
+
+```{r merge_ex2, exercise = TRUE, exercise.eval = FALSE}
+
+merged_dta <-  rbind(clean_men,
+                     clean_women) %>% 
+               select (DHSCLUST, age, sex, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+___(merged_dta)
+```
+
+```{r merge_ex2-solution}
+merged_dta <-  rbind (clean_men,
+                      clean_women) %>% 
+               select (DHSCLUST, age, sex, 
+                       region, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+glimpse(merged_dta)
+
+```
+
+```{r merge_ex2-check}
+grade_code()
+```
+
+
+### Handle missing data
+
+Next, you can check the distribution of missing values in the merged data. 
+
+```{r vismiss, exercise = TRUE, exercise.eval = FALSE, exercise.setup="merge_ex1-setup"}
+
+merged_dta <-  rbind (clean_men,
+                      clean_women) %>% 
+               select (DHSCLUST, region,
+                       age, sex, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+___(merged_dta)
+
+```
+
+```{r vismiss-solution}
+
+merged_dta <-  rbind (clean_men,
+                      clean_women) %>% 
+               select (DHSCLUST, region,
+                       age, sex, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+vis_miss(merged_dta)
+```
+
+```{r vismiss-check}
+grade_code(correct = "The figure above shows that about 1% of the participants have missing data on score for support for wife beating. Your next exercise is to remove these individuals from our dataset.")
+```
+
+### 
+
+As mentioned previously, about 1% of the participants have a missing score for support for wife beating. Your next exercise is to remove these individuals from our dataset. In the code chunk below, remove the blanks with the appropriate function and argument. Remember, that you can use `is.na(VARIABLE)` to check whether a variable has missing values. You can also use `filter()` to keep values. Perhaps you could combine both?😉
+
+
+```{r combine_ex1-setup, exercise.setup="merge_ex1-setup"}
+
+merged_dta <-  rbind(clean_men,
+                     clean_women) %>% 
+               select (DHSCLUST, age, sex, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+```
+
+
+
+```{r combine_ex1, exercise = TRUE, exercise.eval = FALSE}
+
+merged_dta <-  merged_dta %>% 
+               ___(___(att_ipv))
+
+```
+
+```{r combine_ex1-solution}
+
+merged_dta <-  merged_dta %>% 
+               filter(!is.na(att_ipv))
+
+```
+
+```{r combine_ex1-check}
+grade_code()
+```
+
+  <div id="combine_ex1-hint">
+  **Hint:** Have you used the correct tidy function? <br>How are you finding missing value? Remember that you can use is.na() to keep only missing values.
+  </div>
+
+
+### Merge datasets
+
+So far, we have cleaned our men and women data by creating new columns, filtering observations and dropping missing values. We have also combined these two datasets into one. Next, we will merge this dataset with our clean environmen dataset (`clean_env`).
+
+We can do this by using the mutating joins which add columns from y *(merged men and women data set)* to x *(environment data)*, matching observations based on a (or a set of) unique identifier(s). There are four mutating joins: the `inner_join()`, `left_join()`, `right_join()`, and `anti_join()`. You can read more about each of these on the [tidyverse website](https://dplyr.tidyverse.org/reference/mutate-joins.html).
+
+In the code chunk below, you will use `left_join()` to merged our clean and merged men and women data with the environment data using cluster ID as the unique identifier. I have completed parts of the code for you. I have mapped **"."** to x to use the preceeding data. Your exercise is to fill in the blanks with the correct data name for our environment dataset and the correct variable name for the cluster ID.
+
+```{r combine_ex2-setup, exercise.setup="merge_ex1-setup"}
+
+merged_dta <-  rbind(clean_men,
+                     clean_women) %>% 
+               select (DHSCLUST, age, sex, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+clean_env <- environment_data %>% 
+             select (DHSCLUST, Aridity_2020, 
+                     Mean_Temperature_2020,
+                     Enhanced_Vegetation_Index_2020)
+
+```
+
+
+```{r combine_ex2, exercise = TRUE, exercise.eval = FALSE}
+
+linked_dta <-  merged_dta %>% 
+               filter(!is.na(att_ipv)) %>% 
+               left_join(x = .,
+                         y = ___,
+                         by = "___")
+
+```
+
+```{r combine_ex2-solution}
+
+linked_dta <-  merged_dta %>% 
+               filter(!is.na(att_ipv)) %>% 
+               left_join(x = .,
+                         y = clean_env,
+                         by = "DHSCLUST")
+
+```
+
+```{r combine_ex2-check}
+grade_code(correct = "You have succesfully merged the men's and women's dataset to the environment data.")
+```
+
+  <div id="combine_ex2-hint">
+  **Hint:** Have specified the correct variable name for the environment dataset? <br>Have you specified the correct variable name for cluster ID? <br>Your key identifier should be in parenthesis. For example, *"cluster_id"*.
+  </div>
+
+
+###
+
+Let's see what the merged dataset looks like using the appropriate tidy function.
+ 
+
+```{r combine_ex3-setup, exercise.setup="merge_ex1-setup"}
+
+merged_dta <-  rbind(clean_men,
+                     clean_women) %>% 
+               select (DHSCLUST, age, sex, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+clean_env <- environment_data %>% 
+             select (DHSCLUST, Aridity_2020, 
+                     Mean_Temperature_2020,
+                     Enhanced_Vegetation_Index_2020)
+
+```
+
+
+
+```{r combine_ex3, exercise = TRUE, exercise.eval = FALSE}
+
+linked_dta <-  merged_dta %>% 
+               filter(!is.na(att_ipv)) %>% 
+               left_join(x = .,
+                         y = clean_env,
+                         by = "DHSCLUST")
+
+___(linked_dta)
+```
+
+```{r combine_ex3-solution}
+linked_dta <-  merged_dta %>% 
+               filter(!is.na(att_ipv)) %>% 
+               left_join(x = .,
+                         y = clean_env,
+                         by = "DHSCLUST")
+
+glimpse(linked_dta)
+```
+
+```{r combine_ex3-check}
+grade_code()
+```
+
+  <div id="combine_ex3-hint">
+  **Hint:** Have you used the correct tidy function?.
+  </div>
+
+
+
+
+###  The final step
+
+We are almost there! Finally, let's create a binary measure of household wealth:
+
+- *wealth_bin*: a binary indicator categorised as "Rich" for individuals in household in which the wealth score is greater than or equals to 0.5 and "Poor" for individuals in household in which the wealth score is less than 0.5
+
+- *age_group*: a categorical variable with individuals classed as "Youth" if they are aged 15-24 years, "Middle-aged" if they are aged 25-34 years, "Older adult" if they are aged 35 years or older.
+
+```{r validate_ex1-setup, exercise.setup="merge_ex1-setup"}
+
+merged_dta <-  rbind (clean_men,
+                      clean_women) %>% 
+               filter (!is.na(att_ipv)) %>% 
+               select (DHSCLUST, region,
+                       age, sex, 
+                       region, residence,
+                       att_ipv, att_ipv_bin,
+                       wealth_index)
+
+# clean_env <- environment_data %>%
+#              select (DHSCLUST, Aridity_2020,
+#                      Mean_Temperature_2020,
+#                      Enhanced_Vegetation_Index_2020,
+#                      Temperature_January:Temperature_December)
+
+
+clean_env <- environment_data %>%
+             select (DHSCLUST, Aridity_2020,
+                     Mean_Temperature_2020,
+                     Enhanced_Vegetation_Index_2020)
+
+
+set.seed(5)
+# create the variance covariance matrix
+sigma<-rbind(c(1,-0.8,-0.7, -0.6),
+             c(-0.8,1, 0.9, 0.8),
+             c(-0.7,0.9,1, -0.6),
+             c(0.6,-0.8,-0.6, 1))
+
+# create the mean vector
+mu <- c(0, 0, 0, 0)
+
+ 
+# generate the multivariate normal distribution
+linked_dta <- cbind(merged_dta,
+                 as.data.frame(MASS::mvrnorm(n=nrow(merged_dta),
+                                      mu=mu, Sigma=sigma))) %>%
+              mutate(residence= case_when(V1 > quantile(V1,prop.table(table(merged_dta$residence))[1])~
+                                            "Urban", TRUE ~ "Rural"),
+                     sex= case_when(V2<quantile(V2,0.5)~"Male",
+                                    TRUE~"Female"),
+                     att_ipv_bin = case_when(V3 < quantile(V3,prop.table(table(merged_dta$att_ipv_bin))[1])~
+                                               "No support wife beating", TRUE~"Support for wife beating")) %>%
+          mutate (wealth_index = (V4 - min(V4))/(max(V4) - min(V4))) %>%
+          # mutate (att_ipv = round(V3)) %>% 
+          mutate (age_group = case_when(age >= 15 & age <= 24 ~ "Youth",
+                                        age >= 25 & age <= 34 ~ "Middle-aged",
+                                        age >= 35 & age <= 64 ~ "Older adult",
+                                        .default = NA)) %>%
+          mutate (wealth_bin = case_when(wealth_index >= 0.5 ~ "Rich",
+                                              wealth_index < 0.5 ~ "Poor",
+                                              .default = NA)) %>% 
+
+          dplyr::select (DHSCLUST, age, 
+                         sex, region, residence,
+                         att_ipv_bin, att_ipv,
+                         wealth_index, wealth_bin) %>% 
+          left_join(x = .,
+                    y = clean_env,
+                    by = "DHSCLUST")
+
+
+```
+
+
+```{r validate_ex1, exercise = TRUE, exercise.eval = FALSE}
+
+linked_dta <-  linked_dta %>% 
+               mutate (wealth_bin = case_when(___ >= 0.5 ~ "Rich",
+                                              ___ < 0.5 ~ "Poor",
+                                              .default = NA)) %>% 
+               mutate (age_group = case_when(___ ~ "Youth",
+                                             ___ ~ "Middle-aged",
+                                             ___ ~ "Older adult",
+                                             .default = NA))
+
+```
+
+```{r validate_ex1-solution}
+
+# best option ----
+linked_dta <-  linked_dta %>% 
+               mutate (wealth_bin = case_when(wealth_index >= 0.5 ~ "Rich",
+                                              wealth_index < 0.5 ~ "Poor",
+                                              .default = NA)) %>% 
+               mutate (age_group = case_when(age >= 15 & age <= 24 ~ "Youth",
+                                             age >= 25 & age <= 34 ~ "Middle-aged",
+                                             age >= 35 & age <= 64 ~ "Older adult",
+                                             .default = NA))
+
+# another option ----
+linked_dta <-  linked_dta %>% 
+               mutate (wealth_bin = case_when(wealth_index >= 0.5 ~ "Rich",
+                                              wealth_index < 0.5 ~ "Poor",
+                                              .default = NA)) %>% 
+               mutate (age_group = case_when(age >= 15 & age <= 24 ~ "Youth",
+                                             age >= 25 & age <= 34 ~ "Middle-aged",
+                                             age >= 35 ~ "Older adult",
+                                             .default = NA))
+
+```
+
+```{r eval=FALSE, include=FALSE}
+saveRDS(linked_dta,
+        "../../Data viz/week-2/data/linked_dta.RDS")
+```
+
+
+```{r validate_ex1-check}
+grade_code()
+```
+
+  <div id="validate_ex1-hint">
+  **Hint:** Have you replaced all the blanks for age with the correct conditions? For example, the first line for age should be *age >= 15 & age <= 24 ~ "Youth"*.
+  </div>
+
+
+### A message from me to you 😊
+
+
+:::::: {.cols data-latex=""}
+
+::: {.col data-latex="{0.4\textwidth}"}
+
+Before we continue to the next topic, here is an highlight of what you have learnt in this practical session:
+
+- Read multiple data files (.csv and .dta) into R.
+- Inspect the dimensions and structure of a dataframe with `dim()` and `glimpse()`
+- Keep relevant columns in a dataframe with `select()`
+- Rename column names in a dataframe with `rename()`
+- Create {new} columns with `mutate()`
+- Reclassify a variable with `case_when()`
+- Visualise patterns of missingness in a dataframe with `vis_miss()`
+- Keep or remove observations with `filter()`
+- Append multiple datasets with `rbind()`
+- Merge multiple datasets with `left_join()`
+
+:::
+
+::: {.col data-latex="{0.20\textwidth}"}
+\ 
+\ 
+<!-- an empty Div (with a white space), serving as
+a column separator -->
+:::
+
+::: {.col data-latex="{0.40\textwidth}"}
+
+![](www/doing_great.gif){width=100%}
+
+<a href="https://giphy.com/gifs/paramountplus-season-3-nickelodeon-icarly-poseOScAnFjv5zCYnr">via GIPHY</a>
+
+:::
+
+::::::

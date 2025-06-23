@@ -1,0 +1,4497 @@
+---
+format: 
+  revealjs:
+    theme: ["theme/q-theme.scss"]
+    slide-number: c/t
+    footer: <h4> `Statistical Foundations` </h4>
+    code-copy: true
+    center-title-slide: true
+    include-in-header: heading-meta.html
+    code-link: true
+    code-overflow: wrap
+    highlight-style: a11y
+    height: 1080
+    width: 1920
+execute: 
+  eval: true
+  echo: true
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+
+# <hg>{Tidy} data management </hg> {background-color="#006dae"}
+<hm2>`An Introduction and The Why`</hm2>
+
+## {Tidy} data management: The Why
+
+::: {.absolute top="150" left="250" width="1500"}
+
+
+![](images\dirty_data.jpg){width=150%}
+
+:::
+
+## {Tidy} data management: `The Why`
+
+::: {.absolute top="180" left="50" width="1750"}
+
+
+![](images\wvs_data.png){width=120%}
+
+:::
+
+
+::: {.fragment .fade-in }
+::: {.absolute top=160 left=1600 data-id="box1" style="background: NULL; border: 7px solid #b24b89; width: 110px; height: 700px; border-radius: 15px;"}
+:::
+
+::: {.absolute top="505" left="1740" width="200" style="font-size: 60%; line-height: 1.2;"}
+<p style="color:#b24b89">*An irrelevant column*</p>
+:::
+
+:::
+
+
+## {Tidy} data management: `The Why`
+
+::: {.absolute top="180" left="50" width="1750"}
+
+![](images\wvs_data.png){width=120%}
+
+:::
+
+
+::: {.fragment .fade-in }
+::: {.absolute top=580 left=50 data-id="box1" style="background: NULL; border: 6px solid #b67700; width: 1670px; height: 50px; border-radius: 15px;"}
+:::
+
+::: {.absolute top="450" left="1740" width="200" style="font-size: 60%; line-height: 1.2;"}
+<p style="color:#b67700">*Duplicate observations*</p>
+:::
+
+:::
+
+::: {.absolute .fragment .fade-in top=345 left=50 data-id="box1" style="background: NULL; border: 5px solid #b67700; width: 1670px; height: 50px; border-radius: 15px;"}
+:::
+
+## {Tidy} data management: `The Why`
+
+::: {.absolute top="180" left="50" width="1750"}
+
+![](images\wvs_data.png){width=120%}
+
+:::
+
+
+::: {.fragment .fade-in }
+::: {.absolute top=820 left=980 data-id="box1" style="background: NULL; border: 5px solid #587815; width: 80px; height: 25px; border-radius: 12px;"}
+:::
+
+::: {.absolute top="900" left="1740" width="200" style="font-size: 60%; line-height: 1.2;"}
+<p style="color:#587815">*Outliers*</p>
+:::
+
+:::
+
+
+## {Tidy} data management: `The Why`
+
+::: {.absolute top="180" left="50" width="1750"}
+
+![](images\wvs_data.png){width=120%}
+
+:::
+
+
+::: {.fragment .fade-in }
+::: {.absolute top=625 left=190 data-id="box1" style="background: NULL; border: 5px solid #005177; width: 120px; height: 51px; border-radius: 12px;"}
+:::
+
+::: {.absolute top="550" left="-70" width="150" style="font-size: 60%; line-height: 1.2;"}
+<p style="color:black;">*Structural Errors*</p>
+:::
+
+::: {.absolute top=450 left=190 data-id="box1" style="background: NULL; border: 5px solid #005177; width: 120px; height: 25px; border-radius: 12px;"}
+:::
+
+
+:::
+
+::: {.fragment .fade-in }
+::: {.absolute top=685 left=500 data-id="box1" style="background: NULL; border: 5px solid #c64e49; width: 120px; height: 25px; border-radius: 10px;"}
+:::
+
+::: {.absolute top=685 left=1060 data-id="box1" style="background: NULL; border: 5px solid #c64e49; width: 120px; height: 25px; border-radius: 12px;"}
+:::
+
+::: {.absolute top=790 left=315 data-id="box1" style="background: NULL; border: 5px solid #c64e49; width: 120px; height: 25px; border-radius: 12px;"}
+:::
+
+:::
+
+::: {.fragment .fade-in }
+
+::: {.absolute top=790 left=1060 data-id="box1" style="background: NULL; border: 5px solid #722f76; width: 120px; height: 25px; border-radius: 10px;"}
+:::
+
+:::
+
+
+## {Tidy} data management: `The Why`
+
+::: {.absolute top="180" left="50" width="1750"}
+
+![](images\wvs_data.png){width=120%}
+
+:::
+
+
+::: {.fragment .fade-in }
+
+::: {.absolute top="550" left="-70" width="100" style="font-size: 60%; line-height: 1.2;"}
+<p style="color:black;">*Missing Values*</p>
+:::
+
+
+::: {.absolute top=420 left=315 data-id="box1" style="background: NULL; border: 5px solid #770a0f; width: 120px; height: 25px; border-radius: 12px;"}
+:::
+
+
+::: {.absolute top=685 left=500 data-id="box1" style="background: NULL; border: 5px solid #c64e49; width: 120px; height: 25px; border-radius: 10px;"}
+:::
+
+::: {.absolute top=685 left=1060 data-id="box1" style="background: NULL; border: 5px solid #c64e49; width: 120px; height: 25px; border-radius: 12px;"}
+:::
+
+::: {.absolute top=790 left=315 data-id="box1" style="background: NULL; border: 5px solid #c64e49; width: 120px; height: 25px; border-radius: 12px;"}
+:::
+
+:::
+
+
+# <hg>{Tidy} data management </hg> {background-color="#006dae"}
+<hm2>`An Introduction and The How`</hm2>
+
+
+## {Tidy} data management: `The How`
+
+
+::: {.absolute top="100" left="200" width="1600"}
+![](images/rstudio_shot_file_1.png){width=100%}
+
+::: {.absolute top=111 left=9 data-id="box1" style="background: NULL; border: 4px solid #008b91; width: 320px; height: 25px; border-radius: 5px;"}
+:::
+  
+  
+::::: {.fragment .fade-in}
+
+::: {.absolute top=190 left=400 width="530"}
+
+![](images/r_project.png)
+
+:::
+  
+::: {.absolute top=205 left=395 data-id="box1" style="background: NULL; border: 7px solid black; width: 500px; height: 360px; border-radius: 15px;"}
+:::
+
+:::::
+
+::::: {.fragment .fade-in}
+
+::: {.absolute top=290 left=410 data-id="box1" style="background: NULL; border: 4px solid #008b91; width: 480px; height: 65px; border-radius: 10px;"}
+:::
+:::::
+  
+::::: {.fragment .fade-in}
+
+::: {.absolute top=72 left=1413 data-id="box1" style="background: NULL; border: 4px solid #008b91; width: 100px; height: 30px; border-radius: 10px;"}
+:::
+:::::
+
+
+:::
+
+## {Tidy} data management: `The How` {auto-animate=true}
+
+
+::: {.absolute top="70" left="100" width="1700"}
+![](images/d4justice_R.png){width=140%}
+
+:::
+
+
+::: {.absolute top="223" left="150" width="1050" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| eval: true
+#| results: 'hide'
+
+age <- c(34, 23, 56, 34, 46)
+gender <- c("M", "M", "F", "F", "M")
+education <- c("Tertiary", "Primary", 
+               "Primary", "Secondary", "Tertiary")
+country <- c("Nigeria", "Britain", "Peru",
+             "USA", NA)
+
+```
+
+:::
+
+
+## Tidy data management: `The How` {auto-animate=true}
+
+
+::: {.absolute top="223" left="150" width="1050" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| eval: true
+
+age <- c(34, 23, 56, 34, 46)
+gender <- c("M", "M", "F", "F", "M")
+education <- c("Tertiary", "Primary", 
+               "Primary", "Secondary", "Tertiary")
+country <- c("Nigeria", "Britain", "Peru",
+             "USA", NA)
+
+participants <- data.frame (age, gender, 
+                            education, country)
+
+```
+
+:::
+
+## Tidy data management: `The How` {auto-animate=true}
+
+
+::: {.absolute top="223" left="150" width="1700" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| eval: true
+#| output-location: fragment
+
+age <- c(34, 23, 56, 34, 46)
+gender <- c("M", "M", "F", "F", "M")
+education <- c("Tertiary", "Primary", 
+               "Primary", "Secondary", "Tertiary")
+country <- c("Nigeria", "Britain", "Peru",
+             "USA", NA)
+
+participants <- data.frame (age, gender, 
+                            education, country)
+
+dim (participants)
+
+```
+
+:::
+
+## Tidy data management: `The How` {auto-animate=true}
+
+
+::: {.absolute top="223" left="150" width="1700" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| eval: true
+#| output-location: column
+
+age <- c(34, 23, 56, 34, 46)
+gender <- c("M", "M", "F", "F", "M")
+education <- c("Tertiary", "Primary", 
+               "Primary", "Secondary", "Tertiary")
+country <- c("Nigeria", "Britain", "Peru",
+             "USA", NA)
+
+participants <- data.frame (age, gender, 
+                            education, country)
+
+head (participants, 3)
+
+```
+
+:::
+
+## Tidy data management: `The How` {auto-animate=true}
+
+
+::: {.absolute top="223" left="150" width="1700" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| eval: true
+#| output-location: column
+
+age <- c(34, 23, 56, 34, 46)
+gender <- c("M", "M", "F", "F", "M")
+education <- c("Tertiary", "Primary", 
+               "Primary", "Secondary", "Tertiary")
+country <- c("Nigeria", "Britain", "Peru",
+             "USA", NA)
+
+participants <- data.frame (age, gender, 
+                            education, country)
+
+head (participants, 3)
+
+tail (participants, 3)
+
+```
+
+:::
+
+## Tidy data management: `The How` {auto-animate=true}
+
+
+::: {.absolute top="223" left="150" width="1700" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| eval: true
+#| output-location: column
+
+age <- c(34, 23, 56, 34, 46)
+gender <- c("M", "M", "F", "F", "M")
+education <- c("Tertiary", "Primary", 
+               "Primary", "Secondary", "Tertiary")
+country <- c("Nigeria", "Britain", "Peru",
+             "USA", NA)
+
+participants <- data.frame (age, gender, 
+                            education, country)
+
+head (participants, 3)
+
+tail (participants, 3)
+
+str (participants)
+
+
+```
+
+:::
+
+## Tidy data management: `The How` {auto-animate=true}
+
+
+::: {.absolute top="223" left="150" width="1700" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| eval: true
+#| output-location: column
+
+age <- c(34, 23, 56, 34, 46)
+gender <- c("M", "M", "F", "F", "M")
+education <- c("Tertiary", "Primary", 
+               "Primary", "Secondary", "Tertiary")
+country <- c("Nigeria", "Britain", "Peru",
+             "USA", NA)
+
+participants <- data.frame (age, gender, 
+                            education, country)
+
+head (participants, 3)
+
+tail (participants, 3)
+
+str (participants)
+
+str (participants$age)
+
+```
+
+:::
+
+# <hg>{Tidy} data management </hg> {background-color="#006dae"}
+<hm2>A case study using the&nbsp; `World Value Survey`</hm2>
+
+
+## {Tidy} data management: 
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+
+
+::: {.absolute .incremental top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+## {Tidy} data management: 
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+
+## {Tidy} data management: 
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="100" left="800" width="900" }
+
+![](images/wvs_uk.png){width=80%}
+
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=490 left=1055 data-id="box1" style="background: NULL; border: 5px solid #008b91; width: 430px; height: 70px; border-radius: 10px;"}
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=580 left=1055 data-id="box1" style="background: NULL; border: 5px solid #544c88; width: 420px; height: 125px; border-radius: 10px;"}
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=735 left=1055 data-id="box1" style="background: NULL; border: 5px solid #c39d11; width: 430px; height: 70px; border-radius: 10px;"}
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=825 left=1055 data-id="box1" style="background: NULL; border: 5px solid #b84d8d; width: 420px; height: 225px; border-radius: 10px;"}
+:::
+
+
+## {Tidy} data management: 
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+
+
+::: {.absolute top=175 left=1030 width="200"}
+![](images/dplyr.png)
+:::
+
+::: {.absolute top=175 left=1230 width="200"}
+![](images/tidyr.png)
+:::
+
+::: {.absolute top=350 left=1130 width="200"}
+![](images/kableExtra.png)
+:::
+
+::: {.absolute top=525 left=1230 width="200"}
+![](images/ggplot2.png)
+:::
+
+
+::: {.absolute top=350 left=1320 width="230"}
+![](images/broom.png)
+:::
+
+::: {.absolute top=175 left=1230 width="200"}
+![](images/readxl.png)
+:::
+
+::: {.absolute top=695 left=930 width="200"}
+![](images/readr.png)
+:::
+
+::: {.absolute top=525 left=1030 width="200"}
+![](images/lubridate.png)
+:::
+
+::: {.absolute top=695 left=1330 width="200"}
+![](images/haven.png)
+:::
+
+::: {.absolute top=350 left=1530 width="200"}
+![](images/devtools.png)
+:::
+
+::: {.absolute top=525 left=1430 width="200"}
+![](images/googlesheets.png)
+:::
+
+## {Tidy} data management: 
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="900" width="900" style="font-size: 70%; line-height: 4.2;"}
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+library (tidyverse)
+Package <- c("readxl", "readstata13", "readr", "vroom", "tidyxl", "haven", "utils")
+Functions <- c("read_excel('my-spreadsheet.xls', sheet = 1), <br>read_xls('my-spreadsheet.xls'), <br>read_xlsx('my-spreadsheet.xlsx')",
+               "read.dta13('my-stata-data.dta')",
+               "read_csv('my-csv-file.csv'), <br>read_csv2('my-csv-file.csv'), <br>read_delim(), read_rds()",
+               "vroom('my-csv-file.csv')",
+               "xlsx_cells('my_nightmare_file.xlsx')",
+               "read_dta(), read_sas(), read_sav(), <br>read_spss(), read_stata()",
+               "read.csv, read.delim, read.table")
+
+`More info` <- c("https://readxl.tidyverse.org/", "https://github.com/sjewo/readstata13/", "https://readr.tidyverse.org/", "https://www.tidyverse.org/blog/2019/05/vroom-1-0-0/", "https://nacnudus.github.io/tidyxl/reference/tidyxl.html", "https://haven.tidyverse.org/", "/")
+
+
+table <- cbind(Package, Functions) %>% 
+          data.frame()
+
+```
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+library(kableExtra)
+
+table %>% 
+  mutate(Package = cell_spec(Package, "html", link = `More info`)) %>%
+  kableExtra::kable("html", escape = FALSE) %>% 
+  kable_paper("hover", full_width = F, html_font = "Cambria") %>% 
+  column_spec(2, width = "40em", width_min = "20em") %>% 
+  column_spec(1, width = "2em")
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```r
+install.packages("haven")
+install.packages("readstata13")
+install.packages("tidyxl")
+install.packages("readxl")
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```r
+install.packages("haven")          
+install.packages("readstata13")    
+install.packages("tidyxl")         
+install.packages("readxl")         
+
+library (haven)          
+library (readstata13)    
+library (tidyxl)         
+library (readxl)         
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```r
+install.packages("haven")         
+install.packages("readstata13")   
+install.packages("tidyxl")        
+install.packages("readxl")        
+
+library (haven)       
+library (readstata13)  
+library (tidyxl)       
+library (readxl)        
+
+?read_dta
+?read_xls
+?read.dta13
+```
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+library (readxl)  
+library(dplyr)
+
+wvs_data <- read_xlsx("wvs_greatBritain.xlsx")
+glimpse(wvs_data)
+```
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the structure of the data with `glimpse() `  from `{dplyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="350" left="700" width="900" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/glimpse_shot.png){width=120%}
+
+:::
+
+::::: {.absolute .fragment .fade-in}
+::: {.absolute top="240" left="1100" width="900" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/group.png){width="34%" style="transform: rotate(180deg);"}
+
+:::
+
+::: {.absolute top="370" left="1310" width="900" style="font-size: 65%; line-height: 4.2;"}
+
+<p style="color:#005c86">***Numeric***</p>
+
+<p style="color:#005c86">***Integer***</p>
+
+<p style="color:#005c86">***Character***</p>
+
+<p style="color:#005c86">***Factor***</p>
+
+<p style="color:#005c86">***Logical***</p>
+
+:::
+:::::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the structure of the data with `head() `  from `{utils}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+library (readxl)  
+library(dplyr)
+
+wvs_data <- read_xlsx("wvs_greatBritain.xlsx")
+head(wvs_data, 10)
+```
+:::
+
+::: {.absolute top="350" left="700" width="1200" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/head_wvs.png){width=120%}
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="150" left="900" width="1100" style="font-size: 70%;"}
+
+![](images/clean_data.jpg){width=70%}
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Inspect the first 10 rows in the data with `head() `  from `{utils}` * {{< fa box-open >}}
+:::
+
+
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+library (readxl)  
+library(dplyr)
+library (janitor)
+
+wvs_data <- read_xlsx("wvs_greatBritain.xlsx")
+head(wvs_data, 10)
+
+
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Fix column names with `clean_names() `  from `{janitor}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+library (readxl)  
+library(dplyr)
+library (janitor)
+
+wvs_data <- read_xlsx("wvs_greatBritain.xlsx")
+head(wvs_data, 10)
+
+?clean_names
+
+wvs_clean_data <- clean_names(wvs_data)
+
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the structure of the data with `glimpse() `  from `{dplyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+#| eval: false
+
+library (readxl)  
+library(dplyr)
+library (janitor)
+
+wvs_data <- read_xlsx("wvs_greatBritain.xlsx")
+head(wvs_data, 10)
+
+?clean_names
+
+wvs_clean_data <- clean_names(wvs_data)
+glimpse(wvs_clean_data)
+```
+:::
+
+
+::: {.absolute .fragment .fade-in top="550" left="700" width="1200" style="font-size: 50%; line-height: 4.2;"}
+***Cleaned column names***
+
+![](images/clean_glimpse.png){width=50%}
+
+:::
+
+
+::: {.absolute .fragment .fade-in top="550" left="1300" width="1200" style="font-size: 50%; line-height: 4.2;"}
+***Uncleaned column names***
+
+![](images/unclean_glimpse.png){width=60%}
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Keep only the relevant columns with `select() `  from `{dplyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+#| eval: true
+
+library (readxl)  
+library(dplyr)
+library (janitor)
+
+wvs_data <- read_xlsx("wvs_greatBritain.xlsx")
+head(wvs_data, 10)
+
+?clean_names
+
+wvs_clean_data <- clean_names(wvs_data)
+
+sub_wvs_data <- wvs_clean_data %>% 
+                ## Select a few columns
+                select(a_year_year_of_survey,
+                       q261_year_of_birth,
+                       q260_sex,
+                       h_urbrural_urban_rural,
+                       q269_respondent_citizen,
+                       q223_local_party_preference_local_name,
+                       q165_believe_in_god,
+                       q191_justifiable_violence_against_other_people,
+                       q275_highest_educational_level_respondent_isced_2011)
+
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+#| eval: true
+
+sub_wvs_data <- wvs_clean_data %>% 
+                ## Select a few columns
+                select(a_year_year_of_survey,
+                       q261_year_of_birth,
+                       q260_sex,
+                       h_urbrural_urban_rural,
+                       q269_respondent_citizen,
+                       q223_local_party_preference_local_name,
+                       q165_believe_in_god,
+                       q191_justifiable_violence_against_other_people,
+                       q275_highest_educational_level_respondent_isced_2011)
+
+```
+:::
+
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Rename columns with long or complicated names with `rename() `  from `{dplyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+#| eval: true
+
+sub_wvs_data <- wvs_clean_data %>% 
+                ## Select a few columns
+                select(a_year_year_of_survey,
+                       q261_year_of_birth,
+                       q260_sex,
+                       h_urbrural_urban_rural,
+                       q269_respondent_citizen,
+                       q223_local_party_preference_local_name,
+                       q165_believe_in_god,
+                       q191_justifiable_violence_against_other_people,
+                       q275_highest_educational_level_respondent_isced_2011) %>%
+                ## Rename columns
+                rename (survey_yr =  a_year_year_of_survey,
+                        party_pref = q223_local_party_preference_local_name,
+                        violence_just = q191_justifiable_violence_against_other_people,
+                        education = q275_highest_educational_level_respondent_isced_2011,
+                        residence = h_urbrural_urban_rural)
+
+```
+:::
+
+::: {.absolute .fragment .fade-in top="700" left="700" width="1200" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/glimpse_subs.png){width=120%}
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="195" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Tabulate a few columns to understand the structure and identify potential structural errors with `table() `  from `{base}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+table (sub_wvs_data$q260_sex)
+
+table (sub_wvs_data$party_pref)
+
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+Create a new object `wvs_clean_1` from `wvs_clean_1`
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_1 <- sub_wvs_data
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+*Create a variable (replace if existing) with `mutate() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_1 <- sub_wvs_data %>% 
+               mutate (q260_sex = if_else((q260_sex != "Female" & q260_sex != "Male"),
+                                          true = NA,
+                                          false = q260_sex,
+                                          missing = NA))
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Replace values that don't meet a condition to NA with `ifelse()` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_1 <- sub_wvs_data %>% 
+               mutate (q260_sex = if_else((q260_sex != "Female" & q260_sex != "Male"),
+                                          true = NA,
+                                          false = q260_sex,
+                                          missing = NA))
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="550" style="font-size: 70%; line-height: 1.2;"}
+
+*Replace all less meaningful values to missing (NA) with `ifelse()` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_1 <- sub_wvs_data %>% 
+               mutate (q260_sex = if_else((q260_sex != "Female" & q260_sex != "Male"),
+                                          true = NA,
+                                          false = q260_sex,
+                                          missing = NA),
+                       
+                       residence = if_else((residence == "No answer; Missing"),
+                                          true = NA,
+                                          false = residence,
+                                          missing = NA),
+                       
+                       q269_respondent_citizen = if_else((q269_respondent_citizen != "No" & 
+                                                            q269_respondent_citizen != "Yes"),
+                                                          true = NA,
+                                                          false = q269_respondent_citizen,
+                                                          missing = NA),
+                       
+                       q261_year_of_birth = if_else((q261_year_of_birth == "No answer" | 
+                                                            q261_year_of_birth == "Other missing; Multiple answers Mail (EVS)"),
+                                                          true = NA,
+                                                          false = q261_year_of_birth,
+                                                          missing = NA))
+```
+
+```{r include=FALSE}
+wvs_clean_1 <- wvs_clean_1 %>% 
+               mutate (q165_believe_in_god = if_else((q165_believe_in_god != "No" & 
+                                                        q165_believe_in_god != "Yes"),
+                                        true = NA,
+                                        false = q165_believe_in_god,
+                                        missing = NA),
+                     
+                     violence_just = if_else((violence_just == "Don't know" |
+                                            violence_just == "Missing; Not available" |
+                                            violence_just == "No answer"),
+                                            true = NA,
+                                            false = violence_just,
+                                            missing = NA),
+                     
+                     education = if_else((education == "Don't know" |
+                                            education == "Other missing; Multiple answers Mail (EVS)"),
+                                                        true = NA,
+                                                        false = education,
+                                                        missing = NA),
+                     
+                     q261_year_of_birth = if_else((q261_year_of_birth == "No answer" | 
+                                                          q261_year_of_birth == "Other missing; Multiple answers Mail (EVS)"),
+                                                        true = NA,
+                                                        false = q261_year_of_birth,
+                                                        missing = NA),
+                     
+                     party_pref = if_else((party_pref == "-1" | party_pref == "-2" | party_pref == "-5" | 
+                                             party_pref == "4" | party_pref == "5"),
+                                          true = NA,
+                                          false = party_pref,
+                                          missing = NA))
+
+
+```
+
+:::
+
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the structure of the data, again with `glimpse()` and tabulate with `table()`*
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+glimpse(wvs_clean_1$q261_year_of_birth)
+
+table(wvs_clean_1$violence_just)
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Create a variable (replace if existing) with `mutate() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_2 <- wvs_clean_1 %>% 
+               mutate (q261_year_of_birth = as.numeric(q261_year_of_birth),
+                       survey_yr = as.numeric(survey_yr),
+                       q260_sex = as.factor(q260_sex),
+                       q269_respondent_citizen = as.factor(q269_respondent_citizen),
+                       residence = as.factor(residence))
+```
+
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="195" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Convert values in a variable to numeric with `as.numeric()` and to categories with `as.factor()` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_2 <- wvs_clean_1 %>% 
+               mutate (q261_year_of_birth = as.numeric(q261_year_of_birth),
+                       survey_yr = as.numeric(survey_yr),
+                       q260_sex = as.factor(q260_sex),
+                       q269_respondent_citizen = as.factor(q269_respondent_citizen),
+                       residence = as.factor(residence))
+```
+
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Recode values in a variable with `case_when()` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_3 <- wvs_clean_2 %>% 
+               mutate (q261_year_of_birth = as.numeric(q261_year_of_birth),
+                       survey_yr = as.numeric(survey_yr),
+                       q260_sex = as.factor(q260_sex),
+                       q269_respondent_citizen = as.factor(q269_respondent_citizen),
+                       residence = as.factor(residence)) %>% 
+               mutate (violence_just = case_when(violence_just == "Always justifiable" ~ 9,
+                                                 violence_just == "Never justifiable" ~ 1,
+                                                 .default = as.numeric(violence_just)))
+
+```
+
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the structure of the data with `glimpse() `  from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_3 <- wvs_clean_2 %>% 
+               mutate (q261_year_of_birth = as.numeric(q261_year_of_birth),
+                       survey_yr = as.numeric(survey_yr),
+                       q260_sex = as.factor(q260_sex),
+                       q269_respondent_citizen = as.factor(q269_respondent_citizen),
+                       residence = as.factor(residence)) %>% 
+               mutate (violence_just = case_when(violence_just == "Always justifiable" ~ 9,
+                                                 violence_just == "Never justifiable" ~ 1,
+                                                 .default = as.numeric(violence_just)))
+
+str (wvs_clean_3$violence_just)
+
+table (wvs_clean_3$violence_just)
+```
+
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_3 <- wvs_clean_2 %>% 
+               mutate (q261_year_of_birth = as.numeric(q261_year_of_birth),
+                       survey_yr = as.numeric(survey_yr),
+                       q260_sex = as.factor(q260_sex),
+                       q269_respondent_citizen = as.factor(q269_respondent_citizen),
+                       residence = as.factor(residence)) %>% 
+               mutate (violence_just = case_when(violence_just == "Always justifiable" ~ 9,
+                                                 violence_just == "Never justifiable" ~ 1,
+                                                 .default = as.numeric(violence_just)))
+```
+
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Create a variable--age (replace if existing) with `mutate() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_3 <- wvs_clean_2 %>% 
+               mutate (q261_year_of_birth = as.numeric(q261_year_of_birth),
+                       survey_yr = as.numeric(survey_yr),
+                       q260_sex = as.factor(q260_sex),
+                       q269_respondent_citizen = as.factor(q269_respondent_citizen),
+                       residence = as.factor(residence)) %>% 
+               mutate (violence_just = case_when(violence_just == "Always justifiable" ~ 9,
+                                                 violence_just == "Never justifiable" ~ 1,
+                                                 .default = as.numeric(violence_just))) %>% 
+  
+               mutate (age = survey_yr - q261_year_of_birth)
+```
+
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the distribution of age with `table() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_3 <- wvs_clean_2 %>% 
+               mutate (q261_year_of_birth = as.numeric(q261_year_of_birth),
+                       survey_yr = as.numeric(survey_yr),
+                       q260_sex = as.factor(q260_sex),
+                       q269_respondent_citizen = as.factor(q269_respondent_citizen),
+                       residence = as.factor(residence)) %>% 
+               mutate (violence_just = case_when(violence_just == "Always justifiable" ~ 9,
+                                                 violence_just == "Never justifiable" ~ 1,
+                                                 .default = as.numeric(violence_just))) %>% 
+  
+               mutate (age = survey_yr - q261_year_of_birth)
+
+table (wvs_clean_3$age)
+```
+
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- <p style="color:#005c86">**Fix structural errors**</p>
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="80" left="900" width="1100" style="font-size: 70%;"}
+
+
+![](images/messiah.jpg){width=60%}
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Remove duplicate or irrelevant observations***</p>
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Remove duplicate or irrelevant observations***</p>
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="390" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Keep only data (or observations) from young adults aged 18-34 years with `filter() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_4 <- wvs_clean_3 %>% 
+               filter (age >= 18 & age <= 34)
+
+str (wvs_clean_4)
+```
+
+
+:::
+
+::: {.absolute top="600" .fragment .fade-in left="700" width="1300" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/str_wvs_3.png){width=120%}
+
+:::
+
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) unwanted outliers***</p>
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) unwanted outliers***</p>
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="590" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Tabulate a variable to assess the distribution with `table() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+table(wvs_clean_4$education)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) unwanted outliers***</p>
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="590" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Recode education to Secondary or less vs Post-secondary with `case_when() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_4 <- wvs_clean_4 %>% 
+               mutate (education = case_when((education == "Early childhood education (ISCED 0) / no education" |
+                                               education == "Primary education (ISCED 1)" |
+                                                education == "Upper secondary education (ISCED 3)" |
+                                               education == "Lower secondary education (ISCED 2)") ~ "Secondary or less",
+                                             
+                                             
+                                             (education == "Short-cycle tertiary education (ISCED 5)" |
+                                                education == "Post-secondary non-tertiary education (ISCED 4)" |
+                                                education == "Bachelor or equivalent (ISCED 6)" |
+                                                education == "Master or equivalent (ISCED 7)" |
+                                                education == "Doctoral or equivalent (ISCED 8)") ~ "Post-secondary",
+                                             
+                                             .default = factor(education)))
+
+table (wvs_clean_4$education)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) unwanted outliers***</p>
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="590" left="70" width="520" style="font-size: 70%; line-height: 1.2;"}
+
+*Tabulate a variable to assess the distribution with `table() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+table(wvs_clean_4$violence_just)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) unwanted outliers***</p>
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="590" left="70" width="520" style="font-size: 70%; line-height: 1.2;"}
+
+*Dummy-code responses to violence justification `if_else()` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+wvs_clean_4 <- wvs_clean_4 %>% 
+               mutate (violence_just = if_else((violence_just >= 2),
+                                               true = "Justified",
+                                               false = "Never justified",
+                                               missing = NA)) %>% 
+               mutate (violence_just = as.factor(violence_just))
+
+table (wvs_clean_4$violence_just)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Check if there are any missing values in the data with `anyNA() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r}
+#| output-location: fragment
+anyNA(wvs_clean_4)
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Visualise missing values across the dataset with `vis_miss() ` from `{visdat}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+library (visdat)
+vis_miss(wvs_clean_4)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Remove missing values in each column with `filter() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+#| eval: FALSE
+library (visdat)
+vis_miss(wvs_clean_4)
+
+wvs_clean_5 <-  wvs_clean_4 %>% 
+                filter (!is.na (q260_sex) &
+                          !is.na(residence) &
+                          !is.na(q269_respondent_citizen))
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Check whether a column has missing values with `is.na() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+#| eval: FALSE
+library (visdat)
+vis_miss(wvs_clean_4)
+
+wvs_clean_5 <-  wvs_clean_4 %>% 
+                filter (!is.na (q260_sex) &
+                          !is.na(residence) &
+                          !is.na(q269_respondent_citizen))
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Visualise missing values across the dataset with `vis_miss() ` from `{visdat}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r include=FALSE}
+wvs_clean_5 <-  wvs_clean_4 %>% 
+                filter (!is.na (q260_sex) &
+                          !is.na(residence) &
+                          !is.na(q269_respondent_citizen))
+```
+
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+library (visdat)
+vis_miss(wvs_clean_5)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Remove missing values in each column with `filter() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+#| eval: FALSE
+library (visdat)
+vis_miss(wvs_clean_4)
+
+wvs_clean_5 <-  wvs_clean_4 %>% 
+                filter (!is.na (q260_sex) &
+                          !is.na(residence) &
+                          !is.na(q269_respondent_citizen))
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Remove missing values in each column with `filter() ` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+#| eval: FALSE
+library (visdat)
+vis_miss(wvs_clean_4)
+
+wvs_clean_5 <-  wvs_clean_4 %>% 
+                filter (!is.na (q260_sex) &
+                          !is.na(residence) &
+                          !is.na(q269_respondent_citizen)) %>% 
+                filter (!is.na (party_pref) &
+                          !is.na(q165_believe_in_god) &
+                          !is.na(violence_just) &
+                          !is.na(education))
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- <p style="color:#005c86">***Handle (remove) missing data***</p>
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="755" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Visualise missing values across the dataset with `vis_miss() ` from `{visdat}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+#| include: FALSE
+library (visdat)
+vis_miss(wvs_clean_4)
+
+wvs_clean_5 <-  wvs_clean_4 %>% 
+                filter (!is.na (q260_sex) &
+                          !is.na(residence) &
+                          !is.na(q269_respondent_citizen)) %>% 
+                filter (!is.na (party_pref) &
+                          !is.na(q165_believe_in_god) &
+                          !is.na(violence_just) &
+                          !is.na(education))
+```
+
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+library (visdat)
+vis_miss(wvs_clean_5)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+ 
+- <p style="color:#005c86">***Validate***</p>
+
+
+:::
+
+::: {.absolute top="120" left="900" width="1100" style="font-size: 70%;"}
+
+![](images/cleaned.jpg){width=100%}
+:::
+
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+ 
+- <p style="color:#005c86">***Validate***</p>
+
+
+:::
+
+
+::: {.absolute top="900" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the data dimensions with `dim() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+
+## Sample of young people with complete cases
+dim(wvs_clean_5)
+
+## Full sample of young people with missing cases
+dim(wvs_clean_4)
+
+## Full adult sample in the dataset with missing cases
+dim(wvs_clean_3)
+```
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+ 
+- <p style="color:#005c86">***Validate***</p>
+
+
+:::
+
+
+::: {.absolute top="900" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Assess the data dimensions with `dim() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+
+## Sample of young people with complete cases
+dim(wvs_clean_5)
+
+## Full sample of young people with missing cases
+dim(wvs_clean_4)
+
+## Full adult sample in the dataset with missing cases
+dim(wvs_clean_3)
+```
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Value Survey`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+ 
+- <p style="color:#005c86">***Validate***</p>
+
+
+:::
+
+
+::: {.absolute top="900" left="70" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+
+*Assess the data dimensions with `dim() ` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="700" width="1200" style="font-size: 70%;"}
+
+
+```{r, fig.height = 8, fig.width=10}
+#| output-location: fragment
+
+## Sample of young people with complete cases
+dim(wvs_clean_5)
+
+## Full sample of young people with missing cases
+dim(wvs_clean_4)
+
+## Full adult sample in the dataset with missing cases
+dim(wvs_clean_3)
+
+
+```
+:::
+
+
+# <hg>{Tidy} data management </hg> {background-color="#006dae"}
+<hm2>A case study using the&nbsp; `World Bank Data`</hm2>
+
+
+
+
+## {Tidy} data management: 
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="150" left="550" width="1450" }
+
+![](images/wb_dta.png){width=120%}
+
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=250 left=1670 data-id="box1" style="background: NULL; border: 5px solid #008b91; width: 255px; height: 330px; border-radius: 10px;"}
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Inspect the last 10 rows in the data with `tail() `  from `{utils}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+library(dplyr)
+wb_dt <- read.csv("wb_databank.csv")
+
+head(wb_dt, 10)
+tail(wb_dt, 10)
+```
+:::
+
+::: {.absolute top="380" left="700" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/wb_shot.png){width=120%}
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Subset the data with `[]` keeping only the valid rows.*
+:::
+
+::: {.absolute top="200" left="700" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+library(dplyr)
+
+wb_dt <- read.csv("wb_databank.csv")
+
+head(wb_dt, 10)
+
+tail(wb_dt, 10)
+
+wb_data <- wb_dt[1:16969,]
+
+```
+:::
+
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Create a new data set `wb_data_2` with clean column names using `clean_names()` from `{janitor}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wb_data <- wb_dt[1:16969,]
+
+wb_data_2 <-  wb_data %>% 
+              janitor::clean_names()
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="500" width="700" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wb_data <- wb_dt[1:16969,]
+
+library (tidyr)
+wb_data_2 <-  wb_data %>% 
+              janitor::clean_names()
+
+```
+
+:::
+
+
+::: {.absolute top="400" left="500" width="1100" style="font-size: 80%; line-height: 4.2;"}
+![](images/shot_wb.png){width=100%}
+
+:::
+
+::: {.absolute .fragment .fade-in top="300" left="1600" width="400" style="font-size: 80%; line-height: 4.2;"}
+![](images/shot_wb_2.png){width=100%}
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+
+::: {.absolute top="200" left="500" width="700" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wb_data <- wb_dt[1:16969,]
+
+library (tidyr)
+wb_data_2 <-  wb_data %>% 
+              janitor::clean_names()
+
+```
+
+:::
+
+
+::: {.absolute top="60" left="1200" width="850" style="font-size: 80%; line-height: 4.2;"}
+![](images/tidyr-pivoting.gif){width=100%}
+
+:::
+::: {.absolute top="1050" left="1350" width="500" style="font-size: 50%; line-height: 4.2;"}
+*Animation source: https://github.com/gadenbuie/tidyexplain*
+:::
+
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Reshape the data to long format with `pivot_longer()`  from `{tidyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wb_data <- wb_dt[1:16969,]
+
+library (tidyr)
+wb_data_2 <-  wb_data %>% 
+              janitor::clean_names() %>% 
+              pivot_longer(cols = contains("_yr"),
+                           values_to = "values",
+                           names_to = "year") 
+
+```
+:::
+
+::: {.absolute .fragment .fade-in top="500" left="500" width="1100" style="font-size: 80%; line-height: 4.2;"}
+![](images/shot_wb.png){width=100%}
+
+:::
+
+::: {.absolute .fragment .fade-in top="400" left="1550" width="400" style="font-size: 80%; line-height: 4.2;"}
+![](images/shot_wb_2.png){width=100%}
+
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=420 left=1820 data-id="box1" style="background: NULL; border: 5px solid #008b91; width: 115px; height: 170px; border-radius: 10px;"}
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1530" width="470" style="font-size: 70%; line-height: 1.2;"}
+
+*Recode {..} in the data to missing (NA) with `ifelse()` from `{base}` * {{< fa box-open >}}
+
+*Convert the values column to numeric with `as.numeric()` from `{base}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute .fragment .fade-in top="400" left="1550" width="400" style="font-size: 80%; line-height: 4.2;"}
+![](images/shot_wb_2.png){width=100%}
+
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=420 left=1705 data-id="box1" style="background: NULL; border: 5px solid #008b91; width: 115px; height: 170px; border-radius: 10px;"}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wb_data <- wb_dt[1:16969,]
+
+library (tidyr)
+wb_data_2 <-  wb_data %>% 
+              janitor::clean_names() %>% 
+              pivot_longer(cols = contains("_yr"),
+                           values_to = "values",
+                           names_to = "year") %>% 
+              mutate (values = ifelse(values == "..",
+                                      NA, values)) %>% 
+              mutate (values = as.numeric(values))
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Extract only numeric values from year column with `str_extract()` from `{stringr}` * {{< fa box-open >}}
+
+*Convert the newly created period column to numeric with `as.numeric()` from `{base}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wb_data <- wb_dt[1:16969,]
+
+library (tidyr)
+library (stringr)
+wb_data_2 <-  wb_data %>% 
+              janitor::clean_names() %>% 
+              pivot_longer(cols = contains("_yr"),
+                           values_to = "values",
+                           names_to = "year") %>% 
+              mutate (values = ifelse(values == "..",
+                                      NA, values)) %>% 
+              mutate (values = as.numeric(values)) %>% 
+              mutate (period = str_extract(year, "[0-9]+")) %>% 
+              mutate (year = as.numeric (period))
+
+```
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Create a new object `(new_dta)` from the most cleaned version of our world bank data `(wb_data_2)`*
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+new_dta <-  wb_data_2 
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Keep only data for the years 2000-2020 and valid data in values with `filter()` from `{dplyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+new_dta <-  wb_data_2 %>% 
+            filter (year >= 2000 & year <= 2020) %>% 
+            filter (!is.na (values))
+
+```
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Create a new data from the filtered data and keep only a few columns with `select() `  from `{dplyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+data_key <- new_dta %>% 
+            select (series_name, series_code)
+
+```
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Create a data dictionary with a description for each unique series code* 
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+data_key <- new_dta %>% 
+            select (series_name, series_code) %>% 
+            reframe(series_code = unique(series_code),
+                    series_name = unique(series_name))
+
+```
+
+:::
+
+::: {.absolute top="350" .fragment .fade-in left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/data_key_wb.png){width=120%}
+
+:::
+
+::: {.absolute .fragment .fade-in-then-out top=370 left=585 data-id="box1" style="background: NULL; border: 5px solid #008b91; width: 230px; height: 700px; border-radius: 10px;"}
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Convert characters in the `series_code` column to lower with `str_to_lower()` from `{stringr}` * {{< fa box-open >}}
+
+*Replace all `dots` with `_` using `str_replace_all()` from `{stringr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+data_key <- new_dta %>% 
+            select (series_name, series_code) %>% 
+            reframe(series_code = unique(series_code),
+                    series_name = unique(series_name)) %>% 
+            mutate (series_code = str_to_lower(series_code)) %>% 
+            mutate (series_code = str_replace_all(series_code, "\\.", "_"))
+
+```
+
+:::
+
+
+::: {.absolute top="400" .fragment .fade-in left="500" width="800" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/data_key_wb_2.png){width=120%}
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="500" style="font-size: 70%; line-height: 1.2;"}
+
+*Create a new data `(wide_dta)` from `new_dta`*
+
+*Keep only the relevant columns with  `select()` from `{dplyr}` * {{< fa box-open >}}
+
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wide_dta <- new_dta %>% 
+            select (country_name, year,
+                    series_code, values)
+
+```
+
+:::
+
+::: {.absolute top="400" .fragment .fade-in-then-out left="500" width="1200" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/to_reshape.png){width=120%}
+
+:::
+
+::: {.absolute top="400" .fragment .fade-in left="500" width="1200" style="font-size: 80%; line-height: 4.2;"}
+
+![](images/to_reshape_2.png){width=120%}
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Reshape the data to wide format with `pivot_wider()`  from `{tidyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wide_dta <- new_dta %>% 
+            select (country_name, year,
+                    series_code, values) %>% 
+            pivot_wider(names_from = series_code,
+                        values_from = values) 
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Use clean column names with `clean_names()` from `{janitor}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wide_dta <- new_dta %>% 
+            select (country_name, year,
+                    series_code, values) %>% 
+            pivot_wider(names_from = series_code,
+                        values_from = values) %>% 
+            janitor::clean_names()
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Select only the relevant variables with `select() `  from `{dplyr}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wide_dta <- new_dta %>% 
+            select (country_name, year,
+                    series_code, values) %>% 
+            pivot_wider(names_from = series_code,
+                        values_from = values) %>% 
+            janitor::clean_names() %>% 
+            select (country_name, year, eg_cft_accs_zs, 
+                    eg_elc_accs_zs, en_atm_co2e_pc, 
+                    en_clc_heat_xd, sp_dyn_tfrt_in )
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Round all values in the selected columns to 2 decimal places with `round() `  from `{base}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wide_dta <- new_dta %>% 
+            select (country_name, year,
+                    series_code, values) %>% 
+            pivot_wider(names_from = series_code,
+                        values_from = values) %>% 
+            janitor::clean_names() %>% 
+            select (country_name, year, eg_cft_accs_zs, 
+                    eg_elc_accs_zs, en_atm_co2e_pc, 
+                    en_clc_heat_xd, sp_dyn_tfrt_in ) %>% 
+            mutate (eg_cft_accs_zs = round (eg_cft_accs_zs, 2),
+                    eg_elc_accs_zs = round (eg_elc_accs_zs, 2),
+                    en_atm_co2e_pc = round (en_atm_co2e_pc, 2),
+                    en_clc_heat_xd = round (en_clc_heat_xd, 2),
+                    sp_dyn_tfrt_in = round (sp_dyn_tfrt_in, 2))
+
+```
+
+:::
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="350" style="font-size: 70%; line-height: 1.2;"}
+
+*Save single R object to a file with `saveRDS() `  from `{base}` * {{< fa box-open >}}
+
+
+*Save entire workspace with `save.image() `  from `{base}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wide_dta <- new_dta %>% 
+            select (country_name, year,
+                    series_code, values) %>% 
+            pivot_wider(names_from = series_code,
+                        values_from = values) %>% 
+            janitor::clean_names() %>% 
+            select (country_name, year, eg_cft_accs_zs, 
+                    eg_elc_accs_zs, en_atm_co2e_pc, 
+                    en_clc_heat_xd, sp_dyn_tfrt_in ) %>% 
+            mutate (eg_cft_accs_zs = round (eg_cft_accs_zs, 2),
+                    eg_elc_accs_zs = round (eg_elc_accs_zs, 2),
+                    en_atm_co2e_pc = round (en_atm_co2e_pc, 2),
+                    en_clc_heat_xd = round (en_clc_heat_xd, 2),
+                    sp_dyn_tfrt_in = round (sp_dyn_tfrt_in, 2))
+
+saveRDS(wide_dta, "data/wide_dta.rds")
+save.image(file = "data/wide_dta.rdata")
+
+```
+
+:::
+
+
+## {Tidy} data management:  {auto-animate=true}
+
+<hb>A case study using the&nbsp; `World Bank Data`</hb>
+
+::: {.absolute top="150" left="40" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+- Fix structural errors
+
+<br>
+<br>
+
+- Remove duplicate or irrelevant observations
+
+<br>
+<br>
+
+
+- Handle (remove) unwanted outliers
+
+<br>
+<br>
+
+- Handle (remove) missing data
+
+<br>
+<br>
+
+
+- Validate
+
+:::
+
+::: {.absolute top="205" left="1560" width="400" style="font-size: 70%; line-height: 1.2;"}
+
+*Save data to csv with `write.csv() ` from `{utils}` * {{< fa box-open >}}
+
+*Save data to xlsx with `write_xlsx() ` from `{writexl}` * {{< fa box-open >}}
+:::
+
+::: {.absolute top="200" left="500" width="1000" style="font-size: 80%; line-height: 4.2;"}
+
+```{r}
+#| results: "hide"
+
+wide_dta <- new_dta %>% 
+            select (country_name, year,
+                    series_code, values) %>% 
+            pivot_wider(names_from = series_code,
+                        values_from = values) %>% 
+            janitor::clean_names() %>% 
+            select (country_name, year, eg_cft_accs_zs, 
+                    eg_elc_accs_zs, en_atm_co2e_pc, 
+                    en_clc_heat_xd, sp_dyn_tfrt_in ) %>% 
+            mutate (eg_cft_accs_zs = round (eg_cft_accs_zs, 2),
+                    eg_elc_accs_zs = round (eg_elc_accs_zs, 2),
+                    en_atm_co2e_pc = round (en_atm_co2e_pc, 2),
+                    en_clc_heat_xd = round (en_clc_heat_xd, 2),
+                    sp_dyn_tfrt_in = round (sp_dyn_tfrt_in, 2))
+
+saveRDS(wide_dta, "data/wide_dta.rds")
+save(file = "data/wide_dta.rdata")
+
+library (writexl)
+write.csv (wide_dta, "data/wide_dta.csv")
+write_xlsx (wide_dta, path = "data/wide_dta.xlsx")
+```
+
+:::
+
+
+# <hg>`Debugging` </hg> {background-color="#006dae"}
+<hm2>**Errors and Warnings**</hm2>
+
+
+## `Debugging` Errors in R
+
+::: {.absolute top="150" left="50" width="800"}
+
+![](images\warnings.jpg){width=150%}
+
+
+:::
+
+
+::: {.absolute top="150" left="900" width="500"}
+
+![](images\warns.png){width=150%}
+
+
+:::
+
+
+::: {.absolute top="600" left="900" width="500" style="font-size: 60%;"}
+
+![](images\succes.png){width=150%}
+
+:::
+
+
+## `Debugging` Errors in R
+
+
+::: {.absolute top="100" left="40" width="800" style="font-size: 60%;"}
+
+![](images\miss_pck.png){width=150%}
+
+*Check that the `dplyr` package has been installed and loaded.*
+:::
+
+
+::: {.absolute .fragment .fade-in top="280" left="40" width="800" style="font-size: 60%;"}
+
+![](images\spell_pck.png){width=150%}
+
+*Check that the `mutate ()` function has been spelt correctly*
+:::
+
+
+::: {.absolute .fragment .fade-in top="490" left="40" width="800" style="font-size: 60%;"}
+
+![](images\var_name.png){width=150%}
+*Check that the object 'Violence_just' has been spelt correctly or exist already.*
+:::
+
+::: {.absolute .fragment .fade-in top="650" left="40" width="800" style="font-size: 60%;"}
+
+![](images\err_inst.png){width=150%}
+*Check that the package name is in quote e.g. "ggplot2"*
+:::
+
+
+::: {.absolute .fragment .fade-in top="830" left="40" width="800" style="font-size: 56%;"}
+
+![](images\import.png){width=150%}
+*Check that the `data.csv` file is in the working directory and enter the correct file path*
+:::
+
+
+::: {.absolute .fragment .fade-in top="880" left="1000" width="950" style="font-size: 60%;"}
+
+![](images\assign_img.png){width=150%}
+*Remember that R uses `=` or <- for assignments, and `==` for the equality sign*
+:::
+
+
+::: {.absolute .fragment .fade-in top="100" left="1000" width="800" style="font-size: 60%;"}
+
+![](images\continue.png){width=70%}
+
+*Check that all opened quotes or parenthesis have been closed*
+:::
+
+::: {.absolute .fragment .fade-in top="280" left="1000" width="900" style="font-size: 45%;"}
+
+![](images\googling.jpg){width=150%}
+
+*Image source: imgflip.com/*
+
+:::

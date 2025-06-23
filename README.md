@@ -15,42 +15,35 @@ This workshop provides an introduction to the fundamental principles and practic
 
 
 
-
-
-
-
-
-
 # Outline
 
-### Topic 1: THEORY [10:00-10:30]
-- Basic dataviz principles [[slides](/03-lectures/ggplot-basics.Rmd)]
+### Topic 1: THEORY [10:00-10:45]
+- Basic dataviz principles [[slides]()]
 - Impressive dataviz showcases
 - `tidyverse`: Tidy approach to data
 
-### Topic 2: BASICS [10:30-11:45]
-- Basic types of plots [[slides](/03-lectures/ggplot-basics.Rmd)]
+### Topic 2: BASICS [10:45-12:00]
+- Basic types of plots [[slides]()]
 - `ggplot2` basics
 - Arranging and exporting plots
-- Practical [exercises](http://iteachr.shinyapps.io/ggplot_basics/)
+- Practical [exercises](04-practicals/intro_ggplot.Rmd)
 
-### Topic 4: TUNE-UP [11:45-13:00]
-- Themes in dataviz [[slides](/03-lectures/ggplot-tuneup.Rmd)]
+
+
+### Topic 4: TUNE-UP [12:00-13:00]
+- Themes in dataviz [[slides]()]
 - Colors and fonts
 - Annotating
-- Practical [exercises](https://iteachr.shinyapps.io/ggplot_tuneup/)
+- Practical [exercises](04-practicals/intro_ggplot.Rmd)
 
-### Topic 3: TOOLBOX [14:00-15:30]
-- Heatmap, dotplot, ggridges, treemap, geofacet [[slides](/03-lectures/ggplot-basics.Rmd)]
+### Topic 3: TOOLBOX [14:00-14:45]
+- Heatmap, dotplot, ggridges, treemap, geofacet [[slides]()]
 - Interactivity: `plotly`, `gganimate`
 
-### Topic 5: SHINE [15:00-16:30]
+### Topic 5: SHINE [14:45-16:00]
 - Dataviz challenge in teams
-- brief presentations by teams and discussion
-- course wrap-up
-
-[slides-gg]: https://ikashnitsky.github.io/dataviz-art-skill/slides/slides-dataviz-bssd.html
-[slides-maps]: https://ikashnitsky.github.io/dataviz-art-skill/slides/slides-maps-bssd.html
+- Brief presentations by teams and discussion
+- Wrap-up
 
 
 # Useful links (mostly adapted from Ilya Kashnitsky and Tim Riffe's [Dataviz – the Art/Skill Cocktail](https://github.com/jschoeley/idem_viz/tree/master))

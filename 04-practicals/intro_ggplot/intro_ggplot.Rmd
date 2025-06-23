@@ -1,0 +1,571 @@
+---
+title: "Advanced Data Visualisations"
+tutorial:
+  id: "exercise-data-viz"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+    css: www/columns.css
+    tutorial.data_dir: ../../02-data/
+runtime: shiny_prerendered
+description: >
+
+  Learn how to visualise patterns in a dataset.
+
+---
+
+```{r setup, include=FALSE}
+library (learnr)
+library (dplyr)
+library (readr)
+library (gradethis)
+library (tidyverse)
+
+
+climate <- read_csv("../../02-data/climate_change.csv") %>% 
+            pivot_longer(cols = `2019`:`2021`,
+                         values_to = "climate_change",
+                         names_to = "year")
+
+
+co2_pcap <- read_csv("../../02-data/co2_pcap.csv") %>% 
+            mutate_at(.vars = vars(`1800`:`2022`), 
+                      .funs = ~as.numeric(.)) %>% 
+            pivot_longer(cols = `1800`:`2022`,
+                         values_to = "co2_pcapita",
+                         names_to = "year")
+
+lfp <- read_csv("../../02-data/lfp.csv") %>% 
+       pivot_longer(cols = `1990`:`2019`,
+                   values_to = "labour_fp",
+                   names_to = "year")
+  
+sanitation <- read_csv("../../02-data/sanitation.csv") %>% 
+              pivot_longer(cols = `2000`:`2022`,
+                           values_to = "sanitation",
+                           names_to = "year")
+              
+ 
+study_dta <-  climate %>% 
+              full_join(., co2_pcap,
+                        by = c("country", "year")) %>% 
+              full_join(., sanitation,
+                        by = c("country", "year")) %>% 
+              full_join(., lfp,
+                        by = c("country", "year")) %>% 
+              mutate (year = as.numeric(year))
+                           
+              
+tutorial_options(
+  exercise.cap = "Console",
+  exercise.checker = gradethis::grade_learnr
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+
+## Welcome
+
+### 
+
+The practical exercises on this page are designed to help you develop advanced skills in creating well-designed and informative graphics with free, open-source statistical analysis software like R/RStudio. 
+
+
+:::::: {.cols data-latex=""}
+
+::: {.col data-latex="{0.5\textwidth}"}
+
+In this practical exercise, you will apply your knowledge of how to create data visualisations using the `ggplot2` package. Before attempting this practical exercise, please make sure that you have some proficiency in R-programming.
+
+In this practical exercise, you will learn to :
+
+* map data → aesthetics → graphics
+* create a ggplot graphic using the relevant `geom_`
+* add layers to a ggplot graphic as necessary
+* customize your ggplot graphic as required
+
+You can also read this chapter on [Getting Started with ggplot2](http://doi.org/10.1007/978-3-319-24277-4_2) for additional support.
+
+:::
+
+::: {.col data-latex="{0.15\textwidth}"}
+\ 
+\ 
+<!-- an empty Div (with a white space), serving as
+a column separator -->
+:::
+
+::: {.col data-latex="{0.35\textwidth}"}
+
+<br>
+<br>
+
+:::
+
+::::::
+
+### Prerequisites
+
+I've installed and pre-loaded the following r-packages📦 for this tutorial:
+
+```{r eval = FALSE}
+library (readr)
+library (ggplot)
+library (dplyr)
+```
+
+
+For this practice exercise, we will use the global data aggregated by [Gapminder](https://www.gapminder.org/)-an independent Swedish foundation that fights devastating misconceptions and promotes a fact-based worldview everyone can understand. The Gapminder [data page](https://www.gapminder.org/data/) includes data on various indicators that have been inherited from Gapminder World, compiled manually as well as those that are direct copy from the World Bank.
+
+I have already downloaded data on some of these indicators for you and stored them in a data folder. These includes data on:
+
+- `climate change`: This measures the % of people who says that climate change is a very serious or somewhat threat when asked  the following question in the Gallup World Poll: *"Do you think that climate change is a very serious threat, a somewhat serious threat, or not a threat at all to the people in this country in the next 20 years?"*. Additional information can be found [here](https://gapm.io/dclimate-change-perception).
+
+
+- `Environmental polution`: This measures Carbondioxide emissions per capita Consumption based, tonnes per capita. Additional information can be found [here](http://gapm.io/dco2_consumption_historic).
+
+
+- `Labour force`: The labour force participation rate measures the percentage of all labour to the total population of working-aged people (15-64 years). Additional information can be found [here](https://www.ilo.org/ilostat/).
+
+- `Sanitation`: The percentage of people using at least basic sanitation services, that is, improved sanitation facilities that are not shared with other households. This indicator encompasses both people using basic sanitation services as well as those using safely managed sanitation services. Improved sanitation facilities include flush/pour flush to piped sewer systems, septic tanks or pit latrines; ventilated improved pit latrines, compositing toilets or pit latrines with slabs. Additional information can be found [here](https://data.worldbank.org/indicator/SH.STA.ACSN).
+
+I have already preloaded each one of these data sets for you. Data on climate change is stored as `climate`, environmental pollution stored as `co2_pcap`, labour force data stored as `lfp` and sanitation stored as `sanitation`. I also cleaned the data (using the tidy principles) and merged them into a single data file that has been stored as `study_dta`.
+
+If you are ready to begin, click on!
+
+
+## Visualizing distributions with `ggplot()`
+
+### Looking ahead
+
+In the lecture, we have covered some of the ways in which you can visualise patterns in a quantitative data. In this exercise, we will create a bar graph to visualize data on the percentage of adults who says that climate change is a very serious or somewhat threat.
+
+Our goal, is reproduce the graph below. We will walk you through, steps-by-steps in creating this graph.
+
+```{r echo=FALSE, fig.height=4.5, fig.width=7.5, fig.align='center'}
+
+graph_dta <-  study_dta %>% 
+              filter (year == 2021) %>% 
+              filter (!is.na(climate_change) &
+                        !is.na(co2_pcapita)) %>% 
+              filter (country == "Brazil" |
+                        country == "Russia" |
+                        country == "India" |
+                        country == "China" |
+                        country == "Egypt" |
+                        country == "Ethiopia" |
+                        country == "Iran" |
+                        country == "UAE" |
+                        country == "South Africa") 
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            width = 0.85,
+            fill = "#003f5c") +
+  geom_col (data = subset (graph_dta, country == "Brazil"),
+            aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#bc5090") +
+  
+  geom_text (aes(x = climate_change + 5,
+                 y = reorder(country,
+                            climate_change),
+                 label = paste0(round(climate_change), "%")),
+             size = 4) +
+  geom_text (aes(y = reorder(country,
+                            climate_change),
+                 label = country),
+             x = 1.5, hjust = 0, 
+             size = 5,
+             color = "white") +
+  
+  labs (x = "% of people who see climate change as a threat",
+        y = "") +
+  theme_void ()
+
+
+```
+
+###
+
+I have already cleaned the data in a format desirable for our analysis. Next, we will begin developing the layers for our graphic. Our next goal is to create a ggplot layer and add a bar graph to the graph. Your bar graph should show the percentage of adults who believe that climate change is a threat across the BRICS countries. I have already pre-filled the code chunk for you below. Your task is to replace the blanks with the correct values. For example, *map country to the y-axis*, *% that see climate change as a threat to the x-axis*. Lastly, fill the bars with a blue color coded ("#003f5c").
+
+```{r dist_ex1-setup}
+
+graph_dta <-  study_dta %>% 
+              filter (year == 2021) %>% 
+              filter (!is.na(climate_change) &
+                        !is.na(co2_pcapita)) %>% 
+              filter (country == "Brazil" |
+                        country == "Russia" |
+                        country == "India" |
+                        country == "China" |
+                        country == "Egypt" |
+                        country == "Ethiopia" |
+                        country == "Iran" |
+                        country == "UAE" |
+                        country == "South Africa")
+
+```
+
+
+```{r dist_ex1, exercise = TRUE, exercise.eval = FALSE}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes (y = ___,
+                 x = ___),
+            fill = ___)
+```
+
+```{r dist_ex1-solution}
+
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = country,
+                x = climate_change),
+            fill = "#003f5c") 
+
+```
+
+```{r dist_ex1-check}
+grade_code()
+```
+
+
+<div id="dist_ex1-hint">
+**Hint:** Have you mapped the correct variable names to the correct aesthetics?<br>Remember that attributes that are not in the dataset DO NOT have to be in the `aes()` argument.
+</div>
+
+
+
+###
+
+Excellent! We now have a bar chart showing the percentage of adults who see climate change as a threat. However, you would notice that the bars are not well ordered on the y-axis and it can be challenging to see which country has the lowest percentage. We can address this by re-ordering the y-axis based on the % that see climate change as a threat. Your task is to fill the blank with the appropriate code to order the y-axis. 
+
+
+```{r dist_ex1_1, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes (y = ___,
+                 x = climate_change),
+            fill = "#003f5c")
+```
+
+
+
+<div id="dist_ex1_1-hint">
+**Hint:** Have you specified the correct name?
+</div>
+
+
+
+
+###
+
+The graph is gradually looking great. However, the bars are slightly bigger than expected. Your next task is to replace the blanks with the correct argument to adjust the width of the bars to 0.85. 
+
+```{r dist_ex2, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            ___ = ___)
+
+```
+
+
+<div id="dist_ex2-hint">
+**Hint:** Have you specified the correct argument? <br> Did you specify the correct width (0.85)?
+</div>
+
+
+###
+
+Now, we have a well ordered bar graph. From this graph, we can see that a much larger percentage of adults in Brazil believe that climate change is a threat. Why don't we then emphasize this in our visualisation?
+
+We can do this by slightly changing the bar color for Brazil and there are infact many ways to do this. One way can be to add another layer with a bar just for Brazil using `geom_col()`. For this new layer, rather than plot our entire graph data, we will keep a subset of the data, that is, data from Brazil. I have already pre-filled part of the code for you. Your task is to replace the blanks with the appropriate arguments.
+
+
+```{r dist_ex3, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            ___ = ___) +
+  geom_col (data = subset (___, ___),
+            aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#bc5090")
+
+
+```
+
+<div id="dist_ex3-hint">
+**Hint:** <br> You have probably gotten the correct values for the first two blanks in the previous exercise. You can copy that over. <br> Are you struggling to subset the data? You can for example keep data for India by using `subset(DATA, VARIABLE == "India"). <br> Have you specified the correct variable name for country? <Have you specified the correct country name (Brazil)?>
+</div>
+
+
+###
+
+Our next task is to add a text layer to our graph so that it's easy to interpret the bars. Just like the other geoms, the `geom_text()` accepts the following key aesthetics: x, y, label. We will map the country names (ordered based on percentages) to the y-axis and the percentage to the label text. For the x-axis, we could map the percentages, however, this would position the text right at the tip of the bars. We can fix this by mapping the value of the x-axis to the sum of the percentage and any number that gives the desired position for the labels. 
+
+I have already added the geom_text layer for you and pre-filled parts of the code. Your task is to replace the blanks with the appropriate arguments. For the x-axis aesthetic in geom_text, map the percentage + 5.
+
+
+```{r dist_ex4, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            ___ = ___) +
+  geom_col (data = subset (___, ___),
+            aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#bc5090") ___
+  geom_text (aes(x = ___,
+                 y = reorder(country,
+                             climate_change),
+                 label = climate_change),
+             size = 4)
+```
+
+<div id="dist_ex4-hint">
+**Hint:** Have you specified the correct name?
+</div>
+
+
+###
+
+We can also get rid of decimals in the labels using `round()`. Your next task is to  round the label text by filling the blanks and the other blanks.
+
+```{r dist_ex5, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            ___ = ___) +
+  geom_col (data = subset (___, ___),
+            aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#bc5090") ___
+  geom_text (aes(x = ___,
+                 y = reorder(country,
+                             climate_change),
+                 label = ___(climate_change)),
+             size = 4)
+```
+
+<div id="dist_ex5-hint">
+**Hint:** Have you specified the correct name?
+</div>
+
+
+###
+
+Excellent! We now have a graph with data labels for each graph. However, it could be challenging for readers to fully contextualize the values. For example, whether the values are percentages, mean or rate/1000. We can also make the labels a bit more descriptive by adding a percentage symbol at the end of each label.
+
+To do this we can concatenate the percentages *(rounded to the nearest whole number)* with the percentage symbol. There are a few r-functions to concatenate texts. However, we will use `paste0()`. Your next task is to replace the blanks with the appropriate arguments. The labels in the output you produce should look like 64% instead of 64.1%.
+
+```{r dist_ex6, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            width = 0.85) +
+  geom_col (data = subset (graph_dta, country == "Brazil"),
+          aes(y = reorder(country,
+                          climate_change),
+              x = climate_change),
+          fill = "#bc5090") +
+  geom_text (aes(x = climate_change + 5,
+                 y = reorder(country,
+                             climate_change),
+                 label = ___(round(climate_change), ___)),
+             size = 4)
+
+```
+
+
+<div id="dist_ex6-hint">
+**Hint:** Are you using the right function to concatenate texts? <br> You can use `paste0(XXX, "%")`
+</div>
+
+
+
+###
+
+We have now successfully added data labels to our graph. You would also observe that our sample graphic has no y-axis label. Instead the country names are inside each bar. We can achieve this by adding another text layer to our plot. To do this, we will map the country names to the relevant aesthetic. We will also place the country names inside the bars, preferably at 1.5% on the x-axis. Lastly, the country names are left-aligned and we can control this in the horizontal justification (`hjust`) argument.
+
+Your next task is to replace the blanks using the information provided above.
+
+
+
+```{r dist_ex7, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            width = 0.85) +
+  geom_col (data = subset (graph_dta, country == "Brazil"),
+          aes(y = reorder(country,
+                          climate_change),
+              x = climate_change),
+          fill = "#bc5090") +
+  geom_text (aes(x = climate_change + 5,
+                 y = reorder(country,
+                             climate_change),
+                 label = paste0(round(climate_change), ___)),
+             size = 4) ___
+  geom_text (aes(y = reorder(country,
+                             climate_change),
+                 label = ___),
+             x = ___, hjust = ___)
+
+```
+
+
+
+<div id="dist_ex7-hint">
+**Hint:** You can control horizontal alignment with `hjust`. For example, `hjust = 1 for right` alignment and `hjust = 0.5` for right alignment.
+</div>
+
+
+
+###
+
+You would have observed that the text in the color is black. However, black doesn't come out appropiately in the figure. We can make this more visually appealing by changing the color to a brighter color. 
+
+You task is to replace the blanks with the appropriate arguments (some of these you have entered in the previous code chunk). On the last line of the code chunk, you should replace the blanks with an argument to change the font colors to "white".
+
+```{r dist_ex8, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            width = 0.85) +
+  geom_col (data = subset (graph_dta, country == "Brazil"),
+            aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#bc5090") +
+  geom_text (aes(x = climate_change + 5,
+                 y = reorder(country,
+                             climate_change),
+                 label = paste0(round(climate_change), ___)),
+             size = 4) +
+  geom_text (aes(y = reorder(country,
+                             climate_change),
+                 label = ___),
+             x = ___, hjust = ___,
+             size = 5,
+             ___ = ___)
+
+```
+
+
+<div id="dist_ex8-hint">
+**Hint:** Have you specified the correct name?
+</div>
+
+
+###
+
+We have covered how to customize your data visualisations using pre-built themes. There are several of these themes and you can read more about them [here](https://ggplot2.tidyverse.org/reference/ggtheme.html). Your next task is to add another layer using an appropriate theme--one without any grid lines, panel border, axis texts, ticks or title, and a plain white background.
+
+```{r dist_ex11, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            width = 0.85) +
+  geom_col (data = subset (graph_dta, country == "Brazil"),
+          aes(y = reorder(country,
+                          climate_change),
+              x = climate_change),
+          fill = "#bc5090") +
+  geom_text (aes(x = climate_change + 5,
+                 y = reorder(country,
+                             climate_change),
+                 label = paste0(round(climate_change), "%")),
+             size = 4) +
+  geom_text (aes(y = reorder(country,
+                             climate_change),
+                 label = ___),
+             x = ___, hjust = ___,
+             size = 5,
+             color = "white") +
+  ___ ()
+
+```
+
+<div id="dist_ex11-hint">
+**Hint:** Have you specified the correct name?
+</div>
+
+
+
+###
+Great job! We now have a great data visualisation showing the distribution of adults in the population who see climate change as a serious threat. However, this is only known to us and not our readers without a descriptive title for the graph. Your final task in this exercise is to add a descriptive title to the graph.
+
+
+```{r dist_ex12, exercise = TRUE, exercise.eval = FALSE, exercise.setup="dist_ex1-setup"}
+graph_dta %>% 
+  ggplot () +
+  geom_col (aes(y = reorder(country,
+                            climate_change),
+                x = climate_change),
+            fill = "#003f5c",
+            width = 0.85) +
+  geom_col (data = subset (graph_dta, country == "Brazil"),
+          aes(y = reorder(country,
+                          climate_change),
+              x = climate_change),
+          fill = "#bc5090") +
+  geom_text (aes(x = climate_change + 5,
+                 y = reorder(country,
+                             climate_change),
+                 label = paste0(round(climate_change), "%")),
+             size = 4) +
+  geom_text (aes(y = reorder(country,
+                             climate_change),
+                 label = ___),
+             x = ___, hjust = ___,
+             size = 5,
+             color = "white") +
+  ___ () +
+  labs (title = ___)
+
+
+```
+
+
+<div id="dist_ex12-hint">
+**Hint:** Have you specified the correct argument in `labs()`?
+</div>

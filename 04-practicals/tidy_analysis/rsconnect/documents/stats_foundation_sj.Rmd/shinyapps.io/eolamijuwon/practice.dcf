@@ -1,0 +1,12 @@
+name: practice
+title: practice
+username: eolamijuwon
+account: eolamijuwon
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11259150
+bundleId: 8268719
+url: https://eolamijuwon.shinyapps.io/practice/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

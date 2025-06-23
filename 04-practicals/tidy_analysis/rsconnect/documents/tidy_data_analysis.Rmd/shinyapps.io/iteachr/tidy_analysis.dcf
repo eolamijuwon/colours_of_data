@@ -1,0 +1,12 @@
+name: tidy_analysis
+title: tidy_analysis
+username: iteachr
+account: iteachr
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14945409
+bundleId:
+url: https://iteachr.shinyapps.io/tidy_analysis/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
