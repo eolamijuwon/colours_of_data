@@ -9,7 +9,7 @@ This workshop provides an introduction to the fundamental principles and practic
 - [<a href="https://cloud.r-project.org" target="_blank" rel="noopener noreferrer">R</a>]
 - [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)  
 - [R {packages}](/01-prerequisites/install-pkg.R)
-- [Datasets](/02-data/install-pkg.R)
+- [Datasets](/02-data/)
 - Basic familiarity with R, consider [RStudio Primers](https://rstudio.cloud/learn/primers)
 - Recommended readings: [Better Data Visualizations: A Guide for Scholars, Researchers, and Wonks](https://doi.org/10.7312/schw19310), [`ggplot2`: Elegant Graphics for Data Analysis](https://link.springer.com/book/10.1007/978-3-319-24277-4), [A Layered Grammar of Graphics](http://doi.org/10.1198/jcgs.2009.07098).
 
@@ -26,17 +26,15 @@ This workshop provides an introduction to the fundamental principles and practic
 - Basic types of plots [[slides]()]
 - `ggplot2` basics
 - Arranging and exporting plots
-- Practical [exercises](04-practicals/intro_ggplot/intro_ggplot.Rmd)
+- Practical [[exercises](04-practicals/intro_ggplot/intro_ggplot.Rmd)]
 
-
-
-### Topic 4: TUNE-UP [12:00-13:00]
+### Topic 3: TUNE-UP [12:00-13:00]
 - Themes in dataviz [[slides]()]
 - Colors and fonts
 - Annotating
 - Practical [exercises](04-practicals/intermediate/intermediate.Rmd)
 
-### Topic 3: TOOLBOX [14:00-14:45]
+### Topic 4: TOOLBOX [14:00-14:45]
 - Heatmap, dotplot, ggridges, treemap, geofacet [[slides]()]
 - Interactivity: `plotly`, `gganimate`
 
