@@ -26,7 +26,7 @@ This workshop provides an introduction to the fundamental principles and practic
 - Basic types of plots [[slides]()]
 - `ggplot2` basics
 - Arranging and exporting plots
-- Practical [exercises](04-practicals/intro_ggplot.Rmd)
+- Practical [exercises](04-practicals/intro_ggplot/intro_ggplot.Rmd)
 
 
 
@@ -34,7 +34,7 @@ This workshop provides an introduction to the fundamental principles and practic
 - Themes in dataviz [[slides]()]
 - Colors and fonts
 - Annotating
-- Practical [exercises](04-practicals/intro_ggplot.Rmd)
+- Practical [exercises](04-practicals/intermediate/intermediate.Rmd)
 
 ### Topic 3: TOOLBOX [14:00-14:45]
 - Heatmap, dotplot, ggridges, treemap, geofacet [[slides]()]
