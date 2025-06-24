@@ -18,7 +18,7 @@ This workshop provides an introduction to the fundamental principles and practic
 # Outline
 
 ### Topic 1: THEORY [10:00-10:45]
-- Basic dataviz principles [[slides](03-lectures/01_basic_data_visualisation.pdf)]
+- Basic dataviz principles [<a href="03-lectures/01_basic_data_visualisation.pdf" target="_blank" rel="noopener noreferrer">slides</a>]
 - Impressive dataviz showcases
 
 ### Topic 2: BASICS [10:45-12:00]
