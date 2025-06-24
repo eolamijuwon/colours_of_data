@@ -34,7 +34,7 @@ This workshop provides an introduction to the fundamental principles and practic
 - Practical [exercises](04-practicals/intermediate/intermediate.Rmd)
 
 ### Topic 4: TOOLBOX [14:00-14:45]
-- Interactivity: `plotly`, `gganimate` [[slides]()]
+- Interactivity: `plotly`, `ggplotly` and `gganimate` [[slides]()]
 
 ### Topic 5: SHINE [14:45-16:00]
 - Dataviz challenge in teams
