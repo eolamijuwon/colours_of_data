@@ -18,25 +18,23 @@ This workshop provides an introduction to the fundamental principles and practic
 # Outline
 
 ### Topic 1: THEORY [10:00-10:45]
-- Basic dataviz principles [[slides]()]
+- Basic dataviz principles [[slides](03-lectures/01_basic_data_visualisation.pdf)]
 - Impressive dataviz showcases
-- `tidyverse`: Tidy approach to data
 
 ### Topic 2: BASICS [10:45-12:00]
-- Basic types of plots [[slides]()]
+- Basic types of plots [[slides](03-lectures/02_basic types of plots.pdf)]
 - `ggplot2` basics
 - Arranging and exporting plots
 - Practical [[exercises](04-practicals/intro_ggplot/intro_ggplot.Rmd)]
 
 ### Topic 3: TUNE-UP [12:00-13:00]
-- Themes in dataviz [[slides]()]
+- Themes in dataviz [[slides](03-lectures/03_tuneup_visualisation.pdf)]
 - Colors and fonts
 - Annotating
 - Practical [exercises](04-practicals/intermediate/intermediate.Rmd)
 
 ### Topic 4: TOOLBOX [14:00-14:45]
-- Heatmap, dotplot, ggridges, treemap, geofacet [[slides]()]
-- Interactivity: `plotly`, `gganimate`
+- Interactivity: `plotly`, `gganimate` [[slides]()]
 
 ### Topic 5: SHINE [14:45-16:00]
 - Dataviz challenge in teams
