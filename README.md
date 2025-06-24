@@ -22,7 +22,7 @@ This workshop provides an introduction to the fundamental principles and practic
 - Impressive dataviz showcases
 
 ### Topic 2: BASICS [10:45-12:00]
-- Basic types of plots [[slides](03-lectures/02_basic types of plots.pdf)]
+- Basic types of plots [<a href="03-lectures/02_basic types of plots.pdf" target="_blank" rel="noopener noreferrer">slides</a>]
 - `ggplot2` basics
 - Arranging and exporting plots
 - Practical [[exercises](04-practicals/intro_ggplot/intro_ggplot.Rmd)]
