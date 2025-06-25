@@ -31,7 +31,7 @@ This workshop provides an introduction to the fundamental principles and practic
 - Themes in dataviz [[slides](03-lectures/03_tuneup_visualisation.pdf)]
 - Colors and fonts
 - Annotating
-- Practical [exercises](04-practicals/intermediate/intermediate.Rmd)
+- Practical [exercises](04-practicals/intermediate/intermediate_ggplot.Rmd)
 
 ### Topic 4: TOOLBOX [14:00-14:45]
 - Interactivity: `plotly`, `ggplotly` and `gganimate` [[slides]()]
