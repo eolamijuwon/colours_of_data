@@ -25,13 +25,13 @@ This workshop provides an introduction to the fundamental principles and practic
 - Basic types of plots [<a href="03-lectures/02_basic types of plots.pdf" target="_blank" rel="noopener noreferrer">slides</a>]
 - `ggplot2` basics
 - Arranging and exporting plots
-- Practical [[exercises](04-practicals/intro_ggplot/intro_ggplot.Rmd)]
+- Practical [[exercises](04-practicals/intro_ggplot/intro_ggplot.Rmd)] [[solution]()]
 
 ### Topic 3: TUNE-UP [12:00-13:00]
 - Themes in dataviz [[slides](03-lectures/03_tuneup_visualisation.pdf)]
 - Colors and fonts
 - Annotating
-- Practical [exercises](04-practicals/intermediate/intermediate_ggplot.Rmd)
+- Practical [exercises](04-practicals/intermediate/intermediate_ggplot.Rmd) [[solution]()]
 
 ### Topic 4: TOOLBOX [14:00-14:45]
 - Interactivity: `plotly`, `ggplotly` and `gganimate` [[slides]()]
